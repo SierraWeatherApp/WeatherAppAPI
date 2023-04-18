@@ -1,7 +1,7 @@
 {
-  "name": "api_gateway",
+  "name": "api_weather",
   "version": "1.0.0",
-  "description": "tiendapp api-gateway",
+  "description": "weather app api-weather",
   "main": "index.js",
   "directories": {
     "lib": "lib"
@@ -11,12 +11,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bautiblacker/gateway.git"
+    "url": "git+https://github.com/SierraWeatherApp/WeatherAppAPI"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bautiblacker/gateway/issues"
+    "url": "https://github.com/SierraWeatherApp/WeatherAppAPI/issues"
   },
-  "homepage": "https://github.com/bautiblacker/gateway#readme"
+  "homepage": "https://github.com/SierraWeatherApp/WeatherAppAPI#readme"
 }

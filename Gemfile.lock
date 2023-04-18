@@ -6,6 +6,12 @@ GIT
     faker (3.1.1)
       i18n (>= 1.8.11, < 2)
 
+GIT
+  remote: https://github.com/vcr/vcr.git
+  revision: 9bbef9c5d1b2a2bb9643d6aa37b88d6729657b00
+  specs:
+    vcr (6.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -234,7 +240,6 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.4.2)
-    vcr (3.0.3)
     webmock (3.18.1)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
@@ -266,7 +271,7 @@ DEPENDENCIES
   rubocop-rspec
   terminal-table (~> 3.0)
   tzinfo-data
-  vcr
+  vcr!
   webmock
 
 RUBY VERSION
