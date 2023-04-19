@@ -54,7 +54,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   # For faking data
   gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'main'
-  gem "vcr", github: "vcr/vcr"
+  gem 'vcr', github: 'vcr/vcr'
   gem 'webmock'
 end
 

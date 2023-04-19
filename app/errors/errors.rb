@@ -47,4 +47,11 @@ module Errors
       super(msg)
     end
   end
+
+  class MissingArgumentError < StandardError
+    def initialize(argument)
+      super
+      @argument = argument
+    end
+  end
 end
