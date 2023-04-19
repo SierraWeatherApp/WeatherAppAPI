@@ -5,8 +5,7 @@ Rails.application.routes.draw do
   # root "articles#index"
   namespace :api do
     namespace :v1 do
-      post 'users/create'
-      resources :cities
+      resources :users, only: [:create]
     end
   end
 end
