@@ -15,4 +15,7 @@ class CitiesService
                 raise exception
         end
     end
+    def change_order_city(params)
+        
+    end
 end

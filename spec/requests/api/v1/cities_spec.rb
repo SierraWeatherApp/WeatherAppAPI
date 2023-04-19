@@ -34,7 +34,7 @@ RSpec.describe "Cities", type: :request do
     before do
       put "/api/v1/cities/city_order", params: {cities: [{id: city1.id, order: 2},{id:city2.id, order:1}]}
     end
-    it 'returns a deleted status' do
+    it 'returns a update status' do
       expect(response).to have_http_status(:ok)
     end
   end

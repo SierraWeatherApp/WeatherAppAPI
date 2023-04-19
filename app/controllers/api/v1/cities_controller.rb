@@ -33,7 +33,14 @@ module Api
                 response
             end
             def city_order 
-                
+                response= {status_code: :ok, message: nil}
+                begin 
+                    citiesService = CitiesService.new()
+                    citiesService.change_order_city(params)
+                rescue => exception
+                    response = {status_code: :internal_server_error, message: { error: exception } }
+                end
+                response
             end
         end
     end
