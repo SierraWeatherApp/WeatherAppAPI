@@ -19,5 +19,4 @@ ActiveRecord::Schema[7.0].define(version: 20_230_418_135_054) do
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
   end
-
 end
