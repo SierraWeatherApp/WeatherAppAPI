@@ -3,10 +3,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+
   namespace :api do
     namespace :v1 do
-      post 'users/create'
-      resources :cities
+      get 'weather' => 'weathers#get_value'
     end
   end
 end
