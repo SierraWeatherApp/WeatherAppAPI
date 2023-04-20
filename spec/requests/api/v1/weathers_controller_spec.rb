@@ -5,9 +5,7 @@ require 'rails_helper'
 # RSpec.describe 'Weather_Spec' do
 RSpec.describe Api::V1::WeathersController do
   before do
-    VCR.use_cassette('Weather JSON') do
-      get '/api/v1/weather'
-    end
+    get '/api/v1/weather'
   end
 
   context 'when success' do
