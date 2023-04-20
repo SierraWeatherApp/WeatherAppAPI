@@ -1,13 +1,11 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      def create
-        response = { message: nil, status: :created }
+      before_action :initialize_services
+      def info
+        response = { message: nil, status: :ok }
         begin
-          valid_params?(%i[device_id])
-          User.create!(device_id: permitted_params[:device_id])
-        rescue Errors::MissingArgumentError => e
-          response = { message: e, status: :bad_request }
+          response[:message] = @user_service.build_user_response(@user)
         rescue StandardError => e
           response = { message: e, status: :internal_server_error }
         end
@@ -18,6 +16,10 @@ module Api
 
       def permitted_params
         params.permit(:device_id)
+      end
+
+      def initialize_services
+        @user_service = UsersService.new
       end
     end
   end
