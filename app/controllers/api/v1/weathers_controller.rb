@@ -11,6 +11,7 @@ module Api
       end
       def get_value
         begin
+          response = {status: :ok, message: nil}
           jsonresponse = {}
           valid_params?(%i[latitude longitude])
           response_cw = @ws.current_weather(params[:latitude], params[:longitude])
@@ -45,9 +46,9 @@ module Api
               jsonresponse = jsonresponse.merge(json_day)
             end
           end
-        byebug
         end
-        render jsonresponse
+        response[:message] = jsonresponse
+        render json: response[:message], status: response[:status]
       end
 
       private

@@ -14,25 +14,24 @@ RSpec.describe Api::V1::WeathersController do
     end
 
     it 'returns temperature' do
-      expect(JSON.parse(response.body))['temperature']
+      expect(JSON.parse(response.body)['temperature']).to be_a(Float)
     end
 
     it 'returns weather code' do
-      expect(JSON.parse(response.body))['weathercode']
+      expect(JSON.parse(response.body)['weathercode']).to be_a(Integer)
     end
 
     it 'returns wind speed' do
-      expect(JSON.parse(response.body))['windspeed']
+      expect(JSON.parse(response.body)['windspeed']).to be_a(Float)
     end
 
     it 'returns humidity' do
-      expect(JSON.parse(response.body))['humidity']
+      expect(JSON.parse(response.body)['humidity']).to eq(nil)
     end
 
     it 'returns is day' do
-      expect(JSON.parse(response.body))['is_day']
+      expect(JSON.parse(response.body)['is_day']).to eq(nil)
     end
-
 
   end
 end
