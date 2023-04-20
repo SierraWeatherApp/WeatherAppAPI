@@ -15,7 +15,7 @@ module Api
       private
 
       def initialize_services
-        @user_service = UserService.new
+        @user_service = UsersService.new
       end
     end
   end

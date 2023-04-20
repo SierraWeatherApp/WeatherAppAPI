@@ -1,4 +1,4 @@
-class UserService
+class UsersService
   def build_user_response(user)
     city = City.all.main_city(user).first
     { city_name: city.city_name, country: city.country, latitude: city.latitude,
