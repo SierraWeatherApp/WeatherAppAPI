@@ -12,5 +12,14 @@ RSpec.describe Api::V1::WeathersController do
     it 'return http success' do
       expect(response).to have_http_status(:success)
     end
+
+    it 'returns temperature' do
+      expect(JSON.parse(response.body))['temperature']
+    end
+
+    it 'returns weather code' do
+      expect(JSON.parse(response.body))['weathercode']
+    end
+
   end
 end

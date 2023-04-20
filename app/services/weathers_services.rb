@@ -8,15 +8,9 @@ class WeathersServices
   # 52.52
   # 13.41
   def current_weather(latitude, longitude)
-    url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&current_weather=true&timezone=UTC"
+    url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&hourly=relativehumidity_2m&current_weather=true&forecast_days=1"
     uri = URI(url)
     response = Net::HTTP.get(uri)
-    # byebug
-    # request_temperature(response)
-    # byebug
-    # request_wind_speed(response)
-    # byebug
-    # request_weather_code(response)
     response
   end
 
@@ -33,6 +27,16 @@ class WeathersServices
   def request_wind_speed(response)
     data_json = JSON.parse(response)
     data_json['windspeed']
+  end
+
+  def request_humidity(response)
+    data_json = JSON.parse(response)
+    data_json['relativehumidity_2m'][0]
+  end
+
+  def request_day_status(response)
+    data_json = JSON.parse(response)
+    data_json['is_day']
   end
 
 end

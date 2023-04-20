@@ -23,10 +23,14 @@ module Api
         begin
           response = @ws.current_weather(latitude, longitude)
           byebug
-          # if valid_params?(%i[latitude longitude temperature_2m])
-          #   # response = @ws.current_weather(params[:latitude], params[:longitude])
-          #   # response = @ws.request_temperature(params[:temperature_2m])
-          # end
+          if valid_params?(%i[latitude longitude temperature is_day windspeed relativehumidity_2m weathercode])
+            response_cw = @ws.current_weather(params[:latitude], params[:longitude])
+            response_temp = @ws.request_temperature(params[:temperature])
+            response_ws = @ws.request_temperature(params[:windspeed])
+            response_hum = @ws.request_temperature(params[:relativehumidity_2m])
+            response_day = @ws.request_temperature(params[:is_day])
+            response_wc = @ws.request_temperature(params[:weathercode])
+          end
         rescue Errors::MissingArgumentError => e
           byebug
           response = { message: e, status: :bad_request }
