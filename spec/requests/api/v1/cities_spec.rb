@@ -74,10 +74,10 @@ RSpec.describe "Cities", type: :request do
       expect(JSON.parse(response.body)['cities'].length).to eq(2)
     end
     it 'returns the first city' do
-      expect(JSON.parse(response.body)['cities'][0]['city_id']).to eq(2673730)
+      expect(JSON.parse(response.body)['cities'][0]['city_id']).to eq(2_673_730)
     end
     it 'returns the second city' do
-      expect(JSON.parse(response.body)['cities'][1]['city_id']).to eq(2673731)
+      expect(JSON.parse(response.body)['cities'][1]['city_id']).to eq(2_673_731)
     end
   end
 
