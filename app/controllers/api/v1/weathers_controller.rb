@@ -9,33 +9,45 @@ module Api
         super
         initialize_services
       end
-
       def get_value
-        # url = 'https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current_weather=true&timezone=UTC'
-        # uri = URI(url)
-        # response = Net::HTTP.get(uri)
-        latitude = 52.52
-        longitude = 13.41
-        # url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&current_weather=true&timezone=UTC"
-        # uri = URI(url)
-        # response = Net::HTTP.get(uri)
-        # byebug
         begin
-          response = @ws.current_weather(latitude, longitude)
-          byebug
-          if valid_params?(%i[latitude longitude temperature is_day windspeed relativehumidity_2m weathercode])
-            response_cw = @ws.current_weather(params[:latitude], params[:longitude])
-            response_temp = @ws.request_temperature(params[:temperature])
-            response_ws = @ws.request_temperature(params[:windspeed])
-            response_hum = @ws.request_temperature(params[:relativehumidity_2m])
-            response_day = @ws.request_temperature(params[:is_day])
-            response_wc = @ws.request_temperature(params[:weathercode])
+          jsonresponse = {}
+          valid_params?(%i[latitude longitude])
+          response_cw = @ws.current_weather(params[:latitude], params[:longitude])
+
+          if params.has_key?(:temperature)
+            if params[:temperature] == "true"
+              json_temp = {temperature: @ws.request_temperature(response_cw) }
+              jsonresponse = jsonresponse.merge(json_temp)
+            end
           end
-        rescue Errors::MissingArgumentError => e
-          byebug
-          response = { message: e, status: :bad_request }
+          if params.has_key?(:weathercode)
+            if params[:weathercode] == "true"
+              json_wc = { weathercode: @ws.request_weather_code(response_cw)}
+              jsonresponse = jsonresponse.merge(json_wc)
+            end
+          end
+          if params.has_key?(:windspeed)
+            if params[:windspeed] == "true"
+              json_ws =  {windspeed: @ws.request_wind_speed(response_cw)}
+              jsonresponse = jsonresponse.merge(json_ws)
+            end
+          end
+          if params.has_key?(:relativehumidity_2m)
+            if params[:relativehumidity_2m] == "true"
+              json_hum[:relativehumidity_2m] =  @ws.request_humidity(response_cw)
+              jsonresponse = jsonresponse.merge(json_hum)
+            end
+          end
+          if params.has_key?(:relativehumidity_2m)
+            if params[:relativehumidity_2m] == "true"
+              json_day[:is_day] =  @ws.request_day_status(response_cw)
+              jsonresponse = jsonresponse.merge(json_day)
+            end
+          end
+        byebug
         end
-        render json: response
+        render jsonresponse
       end
 
       private
@@ -46,23 +58,3 @@ module Api
     end
   end
 end
-
-
-# module Api
-#   module V1
-#     class WeathersController < ApplicationController
-#       def get_value
-#         url = 'https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m'
-#         uri = URI(url)
-#         response = Net::HTTP.get(uri)
-#         @ws.send_temperature(response)
-#         render json: response
-#       end
-#     end
-#   end
-#
-#   private
-#   def initialize_services
-#     @ws = WeathersServices.new
-#   end
-# end
