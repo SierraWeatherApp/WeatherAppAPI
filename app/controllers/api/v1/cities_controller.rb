@@ -4,8 +4,7 @@ module Api
       before_action :initialize_services
       def create
         begin
-          user = User.find(params[:user_id])
-          @city_service.create_city(user, params)
+          @city_service.create_city(@user, params)
           response = { message: nil,
                        status_code: :created }
         rescue StandardError => e
@@ -57,8 +56,7 @@ module Api
 
       def index
         response = { status_code: :ok, message: nil }
-        user = User.find(params[:user_id])
-        cities = City.filter_by_user(user)
+        cities = City.filter_by_user(@user)
         cities = @city_service.sort_cities_by_order(cities)
         response_list = []
         if cities.length.positive?

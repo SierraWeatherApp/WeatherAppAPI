@@ -10,13 +10,9 @@ RSpec.describe 'Cities' do
                     country: 'Sweden', latitude: 59.33459, longitude: 18.06324, order: 1, user_id: user.id)
       create(:city, city_id: 2_673_731, city_name: 'Stockholm',
                     country: 'Sweden', latitude: 59.33459, longitude: 18.06324, order: 2, user_id: user.id)
-      post "/api/v1/users/#{user.id}/cities", params: {
-        city_id: 2_673_732,
-        city_name: 'Stockholm',
-        country: 'Sweden',
-        latitude: 59.33459,
-        longitude: 18.06324
-      }
+      post '/api/v1/user/cities', params: { city_id: 2_673_732, city_name: 'Stockholm', country: 'Sweden',
+                                             latitude: 59.33459, longitude: 18.06324 },
+                                   headers: { 'x-device-id' => user.device_id }
     end
 
     it 'returns a created status' do
@@ -31,7 +27,7 @@ RSpec.describe 'Cities' do
     end
 
     before do
-      delete "/api/v1/users/#{user.id}/cities/#{city.id}"
+      delete "/api/v1/user/cities/#{city.id}", headers: { 'x-device-id' => user.device_id }
     end
 
     it 'returns a deleted status' do
@@ -50,8 +46,9 @@ RSpec.describe 'Cities' do
     end
 
     before do
-      put "/api/v1/users/#{user.id}/cities/city_order",
-          params: { cities: [{ id: city1.id, order: 2 }, { id: city2.id, order: 1 }] }
+      put '/api/v1/user/cities/city_order',
+          params: { cities: [{ id: city1.id, order: 2 }, { id: city2.id, order: 1 }] },
+          headers: { 'x-device-id' => user.device_id }
     end
 
     it 'returns a update status' do
@@ -66,7 +63,7 @@ RSpec.describe 'Cities' do
     end
 
     before do
-      get "/api/v1/users/#{user.id}/cities/#{city.id}"
+      get "/api/v1/user/cities/#{city.id}", headers: { 'x-device-id' => user.device_id }
     end
 
     it 'returns an ok status' do
@@ -88,7 +85,7 @@ RSpec.describe 'Cities' do
                     country: 'Sweden', latitude: 59.33459, longitude: 18.06324, order: 2, user_id: user.id)
       create(:city, city_id: 2_673_730, city_name: 'Stockholm',
                     country: 'Sweden', latitude: 59.33459, longitude: 18.06324, order: 1, user_id: user.id)
-      get "/api/v1/users/#{user.id}/cities"
+      get '/api/v1/user/cities', headers: { 'x-device-id' => user.device_id }
     end
 
     it 'returns an ok status' do

@@ -1,10 +1,8 @@
 class UserService
-  def user_cities(id)
-    raise Errors::RecordNotFound if id.empty?
-
-    # TODO city scope
-    cities = City.get_cities(user_id: id)
-    build_cities_response(cities)
+  def build_user_response(user)
+    city = City.all.main_city(user).first
+    { city_name: city.city_name, country: city.country, latitude: city.latitude,
+      longitude: city.longitude, order: city.order, city_weather_id: city.city_id, id: city.id }
   end
 
   private
