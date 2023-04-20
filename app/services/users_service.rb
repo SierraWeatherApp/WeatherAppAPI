@@ -23,6 +23,6 @@ class UserService
   end
 
   def obtain_cities_weather(cities)
-    # TODO get cities weather with the weather service
+    # TODO: get cities weather with the weather service
   end
 end
