@@ -15,7 +15,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_18_135128) do
   enable_extension "plpgsql"
 
   create_table "cities", force: :cascade do |t|
-    t.bigint "users_id"
+    t.bigint "user_id"
     t.float "latitude", default: 0.0
     t.float "longitude", default: 0.0
     t.integer "city_id"
@@ -24,7 +24,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_18_135128) do
     t.integer "order", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["users_id"], name: "index_cities_on_users_id"
+    t.index ["user_id"], name: "index_cities_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
