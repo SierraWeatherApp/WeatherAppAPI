@@ -6,8 +6,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-
-      get 'weather' => 'weathers#get_value'
+      get 'weather' => 'weathers#current_weather'
       resources :users, only: %i[create] do
         put '/cities/city_order' => 'cities#city_order'
         resources :cities, only: %i[create show index] do

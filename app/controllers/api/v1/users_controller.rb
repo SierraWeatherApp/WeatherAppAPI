@@ -19,7 +19,6 @@ module Api
       def permitted_params
         params.permit(:device_id)
       end
-
     end
   end
 end

@@ -26,12 +26,11 @@ RSpec.describe Api::V1::WeathersController do
     end
 
     it 'returns humidity' do
-      expect(JSON.parse(response.body)['humidity']).to eq(nil)
+      expect(JSON.parse(response.body)['humidity']).to be_nil
     end
 
     it 'returns is day' do
-      expect(JSON.parse(response.body)['is_day']).to eq(nil)
+      expect(JSON.parse(response.body)['is_day']).to be_nil
     end
-
   end
 end
