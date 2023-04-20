@@ -8,10 +8,10 @@ RSpec.describe 'Cities' do
     before do
       create(:city, city_id: 2_673_730, city_name: 'Stockholm',
                     country: 'Sweden', latitude: 59.33459, longitude: 18.06324, order: 1, user_id: user.id)
-      create(:city, city_id: 2_673_730, city_name: 'Stockholm',
+      create(:city, city_id: 2_673_731, city_name: 'Stockholm',
                     country: 'Sweden', latitude: 59.33459, longitude: 18.06324, order: 2, user_id: user.id)
       post "/api/v1/users/#{user.id}/cities", params: {
-        city_id: 2_673_730,
+        city_id: 2_673_732,
         city_name: 'Stockholm',
         country: 'Sweden',
         latitude: 59.33459,
@@ -45,7 +45,7 @@ RSpec.describe 'Cities' do
                     country: 'Sweden', latitude: 59.33459, longitude: 18.06324, order: 1, user_id: user.id)
     end
     let(:city2) do
-      create(:city, city_id: 2_673_730, city_name: 'Stockholm',
+      create(:city, city_id: 2_673_731, city_name: 'Stockholm',
                     country: 'Sweden', latitude: 59.33459, longitude: 18.06324, order: 2, user_id: user.id)
     end
 
