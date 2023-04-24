@@ -57,6 +57,14 @@ RSpec.describe 'Cities' do
     it 'returns a update status' do
       expect(response).to have_http_status(:ok)
     end
+
+    it 'changes order for city1' do
+      expect(City.find(city1.id).order).to eq(2)
+    end
+
+    it 'changes order for city2' do
+      expect(City.find(city2.id).order).to eq(1)
+    end
   end
 
   describe 'GET /city' do

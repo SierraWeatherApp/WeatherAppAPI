@@ -17,12 +17,17 @@ class CitiesService
   def change_order_cities(params, user)
     cities = params[:cities]
     user_cities_length = City.filter_by_user(user).length
+    change_order_cities_put_to_back(cities, user_cities_length)
+    cities.each do |city|
+      change_order_city(city[:id], city[:order])
+    end
+  end
+
+  def change_order_cities_put_to_back(cities, user_cities_length)
     i = 1
     cities.each do |city|
       change_order_city(city[:id], user_cities_length + i)
-    end
-    cities.each do |city|
-      change_order_city(city[:id], city[:order])
+      i += 1
     end
   end
 
