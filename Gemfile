@@ -9,6 +9,10 @@ gem 'rails', '~> 7.0.4', '>= 7.0.4.3'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.1'
 
+gem 'rest-client', '~> 2.1'
+
+gem 'httparty'
+
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 5.0'
 
@@ -54,8 +58,11 @@ group :development, :test do
   gem 'factory_bot_rails'
   # For faking data
   gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'main'
-  gem 'vcr', github: 'vcr/vcr'
-  gem 'webmock'
+end
+
+group :test do
+  # gem 'webmock'
+  # gem "vcr", github: "vcr/vcr"
 end
 
 group :development do

@@ -14,6 +14,10 @@ module Api
 
       private
 
+      def permitted_params
+        params.permit(:device_id)
+      end
+
       def initialize_services
         @user_service = UsersService.new
       end
