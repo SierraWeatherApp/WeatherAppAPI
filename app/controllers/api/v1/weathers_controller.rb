@@ -1,7 +1,3 @@
-require 'uri'
-require 'httparty'
-require 'openssl'
-
 module Api
   module V1
     class WeathersController < ApplicationController
@@ -15,6 +11,8 @@ module Api
         begin
           valid_params?(%i[latitude longitude])
           jsonresponse = @ws.retrieve_values(params)
+        rescue StandardError => e
+          response = { status: :internal_server_error, message: e }
         end
         response[:message] = jsonresponse
         render json: response[:message], status: response[:status]
