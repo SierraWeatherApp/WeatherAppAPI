@@ -5,8 +5,10 @@ require 'rails_helper'
 # RSpec.describe 'Weather_Spec' do
 RSpec.describe Api::V1::WeathersController do
   let(:user) { create(:user, device_id: '19238723y7dh3su2as21dfs231a213sd2af') }
+
   before do
-    get '/api/v1/weather?latitude=52.52&longitude=13.41&temperature=true&weathercode=true&windspeed=true' , headers: { 'x-device-id' => user.device_id }
+    get '/api/v1/weather?latitude=52.52&longitude=13.41&temperature=true&weathercode=true&windspeed=true',
+        headers: { 'x-device-id' => user.device_id }
   end
 
   context 'when success' do
