@@ -9,8 +9,9 @@ module Api
       def current_weather
         response = { status: :ok, message: nil }
         begin
-          valid_params?(%i[latitude longitude])
-          jsonresponse = @ws.retrieve_values(params)
+          valid_params?(%i[latitude longitude day])
+          jsonresponse = @ws.retrieve_time_frame(params)
+          #jsonresponse = @ws.retrieve_values(params)
         rescue StandardError => e
           response = { status: :internal_server_error, message: e }
         end
