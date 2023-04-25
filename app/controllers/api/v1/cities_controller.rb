@@ -36,7 +36,8 @@ module Api
       def city_order
         response = { status_code: :ok, message: nil }
         begin
-          @city_service.change_order_cities(params)
+          user = User.find(params[:user_id])
+          @city_service.change_order_cities(params, user)
         rescue StandardError => e
           response = { status_code: :internal_server_error, message: { error: e } }
         end
