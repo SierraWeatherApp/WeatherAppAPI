@@ -26,7 +26,7 @@ module Api
       def destroy_city(city)
         response = { status_code: :ok, message: nil }
         begin
-          @city_service.delete_city(city)
+          @city_service.delete_city(city, @user)
         rescue StandardError => e
           response = { status_code: :internal_server_error, message: { error: e } }
         end
@@ -36,8 +36,7 @@ module Api
       def city_order
         response = { status_code: :ok, message: nil }
         begin
-          user = User.find(params[:user_id])
-          @city_service.change_order_cities(params, user)
+          @city_service.change_order_cities(params, @user)
         rescue StandardError => e
           response = { status_code: :internal_server_error, message: { error: e } }
         end

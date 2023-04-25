@@ -10,8 +10,15 @@ class CitiesService
                  user_id: user.id)
   end
 
-  def delete_city(city)
+  def delete_city(city, user)
     city.destroy
+    cities = City.filter_by_user(user)
+    cities = sort_cities_by_order(cities)
+    i = 1
+    cities.each do |c|
+      change_order_city(c[:id], i)
+      i += 1
+    end
   end
 
   def change_order_cities(params, user)
