@@ -10,11 +10,11 @@ module Api
         response = { status: :ok, message: nil }
         begin
           valid_params?(%i[latitude longitude mode])
-          if params[:mode] == "cw" # cw -> current_weather
+          if params[:mode] == 'cw' # cw -> current_weather
             jsonresponse = @ws.retrieve_current_weather(params)
-          elsif params[:mode] == "tf"
+          elsif params[:mode] == 'tf' # tf -> time_frame
             valid_params?(%i[day])
-            jsonresponse = @ws.retrieve_time_frame(params) # tf -> time_frame
+            jsonresponse = @ws.retrieve_time_frame(params)
           end
         rescue StandardError => e
           response = { status: :internal_server_error, message: e }
