@@ -1,8 +1,21 @@
 class UsersService
-  def build_user_response(user)
-    city = City.all.main_city(user).first
-    { city_name: city.city_name, country: city.country, latitude: city.latitude,
-      longitude: city.longitude, order: city.order, city_weather_id: city.city_id, id: city.id }
+  def build_user_response
+    city = City.all.first
+    { name: city.name, country: city.country, latitude: city.latitude,
+      longitude: city.longitude, weather_id: city.weather_id,
+      id: city.id }
+  end
+
+  def delete_city(user, city_id)
+    update!(cities_ids: user.cities_ids.delete(city_id))
+  end
+
+  def change_order_cities(cities_ids, user)
+    user.update!(cities_ids:)
+  end
+
+  def add_city(user, city_id)
+    user.update!(cities_ids: user.cities_ids.push(city_id))
   end
 
   private
@@ -10,7 +23,7 @@ class UsersService
   def city_response_message(city, city_weather)
     {
       city_id: city.id, humidity: city_weather[:humidity], wind: city_weather[:wind],
-      city_name: city.city_name, weather: city_weather[:weather], longitude: city.longitude, latitude: city.latitude
+      city_name: city.name, weather: city_weather[:weather], longitude: city.longitude, latitude: city.latitude
     }
   end
 

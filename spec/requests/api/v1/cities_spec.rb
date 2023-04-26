@@ -7,9 +7,9 @@ RSpec.describe 'Cities' do
     # pending "add some examples (or delete) #{__FILE__}"
     before do
       create(:city, city_id: 2_673_730, city_name: 'Stockholm',
-                    country: 'Sweden', latitude: 59.33459, longitude: 18.06324, order: 1, user_id: user.id)
+                    country: 'Sweden', latitude: 59.33459, longitude: 18.06324)
       create(:city, city_id: 2_673_731, city_name: 'Stockholm',
-                    country: 'Sweden', latitude: 59.33459, longitude: 18.06324, order: 2, user_id: user.id)
+                    country: 'Sweden', latitude: 59.33459, longitude: 18.06324)
       post '/api/v1/user/cities', params: { city_id: 2_673_732, city_name: 'Stockholm', country: 'Sweden',
                                             latitude: 59.33459, longitude: 18.06324 },
                                   headers: { 'x-device-id' => user.device_id }
@@ -23,7 +23,7 @@ RSpec.describe 'Cities' do
   describe 'DELETE /destroy' do
     let(:city) do
       create(:city, city_id: 2_673_730, city_name: 'Stockholm',
-                    country: 'Sweden', latitude: 59.33459, longitude: 18.06324, order: 1, user_id: user.id)
+                    country: 'Sweden', latitude: 59.33459, longitude: 18.06324)
     end
 
     before do

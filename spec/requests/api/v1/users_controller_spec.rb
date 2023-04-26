@@ -6,6 +6,7 @@ RSpec.describe 'Users' do
       let(:device_id) { 'k123v23hj213321jh12kj3123k' }
 
       before do
+        create(:city, weather_id: 1, name: 'Stockholm', country: 'Sweden', latitude: 40, longitude:40)
         get '/api/v1/user', headers: { 'x-device-id' => device_id }
       end
 
@@ -31,6 +32,24 @@ RSpec.describe 'Users' do
       it 'returns internal server error status' do
         expect(response).to have_http_status(:internal_server_error)
       end
+    end
+  end
+
+  describe 'Destroy' do
+    context 'removes city id from list of cities ids for user' do
+      before do
+        create(:user, device_id: 'k123v23hj213321jh12kj3123k', cities_ids: [2, 4, 8])
+        patch '/api/v1/user/cities/destroy', headers: { 'x-device-id' => 'k123v23hj213321jh12kj3123k' }, params: {city_id: 4}
+      end
+
+      it 'returns success request status' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'deletes specified city' do
+        expect(user.reload.cities_ids).to eq([2,8])
+      end
+
     end
   end
 end
