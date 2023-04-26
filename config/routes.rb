@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      get '/weather' => 'weathers#current_weather'
+      get '/weather' => 'weathers#weather_info'
       get '/user' => 'users#info'
       scope :user do
         put '/cities/city_order' => 'cities#city_order'

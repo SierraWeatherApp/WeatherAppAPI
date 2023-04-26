@@ -6,12 +6,16 @@ module Api
         initialize_services
       end
 
-      def current_weather
+      def weather_info
         response = { status: :ok, message: nil }
         begin
-          valid_params?(%i[latitude longitude day])
-          jsonresponse = @ws.retrieve_time_frame(params)
-          #jsonresponse = @ws.retrieve_values(params)
+          valid_params?(%i[latitude longitude mode])
+          if params[:mode] == "cw" # cw -> current_weather
+            jsonresponse = @ws.retrieve_current_weather(params)
+          elsif params[:mode] == "tf"
+            valid_params?(%i[day])
+            jsonresponse = @ws.retrieve_time_frame(params) # tf -> time_frame
+          end
         rescue StandardError => e
           response = { status: :internal_server_error, message: e }
         end

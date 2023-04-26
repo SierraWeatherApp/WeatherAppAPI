@@ -3,7 +3,7 @@
 require 'json'
 class WeathersServices
   # rubocop:disable Metrics/AbcSize
-  def retrieve_values(params)
+  def retrieve_current_weather(params)
     json_response = {}
     data_json = JSON.parse(current_weather(params[:latitude], params[:longitude]))
     keys = %i[temperature weathercode windspeed is_day]
