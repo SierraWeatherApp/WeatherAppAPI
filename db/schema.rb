@@ -15,20 +15,18 @@ ActiveRecord::Schema[7.0].define(version: 20_230_418_135_128) do
   enable_extension 'plpgsql'
 
   create_table 'cities', force: :cascade do |t|
-    t.bigint 'user_id'
-    t.float 'latitude', default: 0.0
-    t.float 'longitude', default: 0.0
-    t.integer 'city_id'
-    t.string 'city_name'
+    t.bigint 'weather_id'
+    t.string 'name'
     t.string 'country'
-    t.integer 'order', default: 0
+    t.float 'latitude'
+    t.float 'longitude'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.index ['user_id'], name: 'index_cities_on_user_id'
   end
 
   create_table 'users', force: :cascade do |t|
     t.string 'device_id'
+    t.integer 'cities_ids', default: [], array: true
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
   end

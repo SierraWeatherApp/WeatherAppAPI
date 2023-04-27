@@ -26,7 +26,7 @@ module Api
       private
 
       def initialize_services
-        @ws = WeathersServices.new
+        @ws = WeathersService.new
       end
     end
   end

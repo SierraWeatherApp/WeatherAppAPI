@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 require 'json'
-class WeathersServices
+class WeathersService
   # rubocop:disable Metrics/AbcSize
   def retrieve_current_weather(params)
     json_response = {}
     data_json = JSON.parse(current_weather(params[:latitude], params[:longitude]))
     keys = %i[temperature weathercode windspeed is_day]
     keys.each do |key|
-      if params.key?(key) && params[key] == 'true'
+      if params.key?(key.to_s) && params[key.to_s] == 'true'
         json_response = json_response.merge({ key => data_json['current_weather'][key.to_s] })
       end
     end
@@ -41,5 +41,21 @@ class WeathersServices
     url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&time&daily=temperature_2m_max&daily=temperature_2m_min&forecast_days=#{day}&daily=weathercode&timezone=GMT"
     uri = URI(url)
     Net::HTTP.get(uri)
+  end
+
+  def cities_weather(cities_ids, weather_params)
+    cities_ids.map do |id|
+      city_response_message(id, weather_params)
+    end
+  end
+
+  def city_response_message(id, weather_params)
+    city = City.find(id)
+    params = { longitude: city.longitude, latitude: city.latitude }.merge(weather_params)
+    city_weather = retrieve_current_weather(params)
+    {
+      id: city.id, weather_id: city.weather_id, weather: city_weather, city_name: city.name,
+      longitude: city.longitude, latitude: city.latitude
+    }
   end
 end
