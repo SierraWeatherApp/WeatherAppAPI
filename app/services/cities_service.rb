@@ -8,7 +8,7 @@ class CitiesService
   end
 
   def fetch_city(params)
-    city = City.find_by(params[:weather_id])
+    city = City.find_by(weather_id: params[:weather_id].to_i)
     return city.id unless city.nil?
 
     city = City.create!(weather_id: params[:weather_id],

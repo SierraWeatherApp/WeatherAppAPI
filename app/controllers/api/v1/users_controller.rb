@@ -6,7 +6,7 @@ module Api
       def info
         response = { message: nil, status: :ok }
         begin
-          response[:message] = @user_service.build_user_response
+          response[:message] = @user_service.build_user_response(@user)
         rescue StandardError => e
           response = { message: e, status: :internal_server_error }
         end
@@ -16,11 +16,11 @@ module Api
       def destroy
         response = { status_code: :ok, message: nil }
         begin
-          city_id = params[:city_id]
+          city_id = params[:city_id].to_i
           if @user.cities_ids.include?(city_id)
             @user_service.delete_city(@user, city_id)
           else
-            { status_code: :bad_request, message: { error: 'city_id_not_found' } }
+            response = { status_code: :bad_request, message: { error: 'city_id_not_found' } }
           end
         rescue StandardError => e
           response = { status_code: :internal_server_error, message: { error: e } }
@@ -33,6 +33,8 @@ module Api
         begin
           valid_params?(%i[cities_ids])
           @user_service.change_order_cities(params[:cities_ids], @user)
+        rescue Errors::FlawedOrderError => e
+          response = { status_code: :bad_request, message: { error: e } }
         rescue StandardError => e
           response = { status_code: :internal_server_error, message: { error: e } }
         end
@@ -45,6 +47,8 @@ module Api
 
           response = { message: nil,
                        status_code: :created }
+        rescue Errors::IncorrectAddError => e
+          response = { status_code: :bad_request, message: { error: e } }
         rescue StandardError => e
           response = { status_code: :internal_server_error, message: { error: e } }
         end
