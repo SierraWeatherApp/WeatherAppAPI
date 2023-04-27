@@ -5,7 +5,6 @@ class ApplicationController < ActionController::API
 
   def parse_device_id!
     @device_id = request.headers['x-device-id']
-    # TODO: create specific Error
     raise StandardError, 'device_id not found' if @device_id.blank?
 
     @user = User.find_by(device_id: @device_id)

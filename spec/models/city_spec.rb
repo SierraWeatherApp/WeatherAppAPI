@@ -6,7 +6,8 @@ RSpec.describe City do
   end
 
   it 'is valid with valid attributes' do
-    expect(described_class.new(weather_id: 11, name: 'Stockholm', country: 'Sweden', latitude: 0, longitude: 0)).to be_valid
+    expect(described_class.new(weather_id: 11, name: 'Stockholm', country: 'Sweden', latitude: 0,
+                               longitude: 0)).to be_valid
   end
 
   it 'is invalid without any attributes' do

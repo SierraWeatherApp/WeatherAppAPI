@@ -7,6 +7,7 @@ class User < ApplicationRecord
 
   def duplicate_check
     return if cities_ids.uniq.length == cities_ids.length
+
     errors.add(:cities_ids, 'repeating_entry')
   end
 end

@@ -12,11 +12,10 @@ class CitiesService
     return city.id unless city.nil?
 
     city = City.create!(weather_id: params[:weather_id],
-                 name: params[:name],
-                 country: params[:country],
-                 latitude: params[:latitude],
-                 longitude: params[:longitude])
+                        name: params[:name],
+                        country: params[:country],
+                        latitude: params[:latitude],
+                        longitude: params[:longitude])
     city.id
   end
-
 end

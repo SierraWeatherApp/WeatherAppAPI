@@ -28,9 +28,8 @@ RSpec.describe 'Users' do
         expect(user.device_id).to eq(device_id)
       end
 
-      it 'returns the cities weather' do
-        byebug
-        expect(JSON.parse(response.body)['cities']).to eq({ cities: [] })
+      it 'returns the cities ids and their weather' do
+        expect(JSON.parse(response.body)['cities'][0]['id']).to eq(city_bs.id)
       end
     end
 
@@ -38,6 +37,8 @@ RSpec.describe 'Users' do
       let(:device_id) { 'k123v23hj213321jh12kj3123k' }
 
       before do
+        create(:city, name: 'Stockholm', weather_id: 2_673_730, country: 'Sweden', latitude: 59.33459,
+                      longitude: 18.06324)
         get '/api/v1/user', headers: { 'x-device-id' => device_id }
       end
 
@@ -51,7 +52,7 @@ RSpec.describe 'Users' do
       end
 
       it 'returns the main city' do
-        expect(JSON.parse(response.body)['cities']).to eq({ cities: [] })
+        expect(JSON.parse(response.body)['cities'][0]['weather_id']).to eq(2_673_730)
       end
     end
 
@@ -67,8 +68,8 @@ RSpec.describe 'Users' do
   end
 
   describe 'Destroy' do
-    context 'removes city id from list of cities ids for user' do
-      let(:user){ create(:user, device_id: 'k123v23hj213321jh12kj3123k', cities_ids: [2, 4, 8]) }
+    context 'when removes city id from list of cities ids for user' do
+      let(:user) { create(:user, device_id: 'k123v23hj213321jh12kj3123k', cities_ids: [2, 4, 8]) }
 
       before do
         patch '/api/v1/user/cities/destroy', headers: { 'x-device-id' => user.device_id }, params: { city_id: 4 }
@@ -84,7 +85,7 @@ RSpec.describe 'Users' do
     end
 
     context('when tries to delete inexistent city in users list of cities') do
-      let(:user){ create(:user, device_id: 'k123v23hj213321jh12kj3123k', cities_ids: [2, 4, 8]) }
+      let(:user) { create(:user, device_id: 'k123v23hj213321jh12kj3123k', cities_ids: [2, 4, 8]) }
 
       before do
         patch '/api/v1/user/cities/destroy', headers: { 'x-device-id' => user.device_id }, params: { city_id: 5 }
@@ -101,12 +102,12 @@ RSpec.describe 'Users' do
   end
 
   describe 'Order' do
-    let(:user){ create(:user, device_id: 'k123v23hj213321jh12kj3123k', cities_ids: [5, 2, 4, 8]) }
+    let(:user) { create(:user, device_id: 'k123v23hj213321jh12kj3123k', cities_ids: [5, 2, 4, 8]) }
 
-    context 'orders cities as requested' do
-
+    context 'when orders cities as requested' do
       before do
-        patch '/api/v1/user/cities/change_order', headers: { 'x-device-id' => user.device_id }, params: { cities_ids: [8,4,2,5] }
+        patch '/api/v1/user/cities/change_order', headers: { 'x-device-id' => user.device_id },
+                                                  params: { cities_ids: [8, 4, 2, 5] }
       end
 
       it 'returns success request status' do
@@ -114,13 +115,14 @@ RSpec.describe 'Users' do
       end
 
       it 'changed the city order correctly' do
-        expect(user.reload.cities_ids).to eq([8,4,2,5])
+        expect(user.reload.cities_ids).to eq([8, 4, 2, 5])
       end
     end
 
     context 'when gives error because the order is flawed (missing id)' do
       before do
-        patch '/api/v1/user/cities/change_order', headers: { 'x-device-id' => user.device_id }, params: { cities_ids: [8,4,2] }
+        patch '/api/v1/user/cities/change_order', headers: { 'x-device-id' => user.device_id },
+                                                  params: { cities_ids: [8, 4, 2] }
       end
 
       it 'returns added or missing id error message' do
@@ -134,7 +136,8 @@ RSpec.describe 'Users' do
 
     context 'when gives error because the order is flawed (added id)' do
       before do
-        patch '/api/v1/user/cities/change_order', headers: { 'x-device-id' => user.device_id }, params: { cities_ids: [8,4,2,5,7] }
+        patch '/api/v1/user/cities/change_order', headers: { 'x-device-id' => user.device_id },
+                                                  params: { cities_ids: [8, 4, 2, 5, 7] }
       end
 
       it 'returns added or missing id error message' do
@@ -148,7 +151,8 @@ RSpec.describe 'Users' do
 
     context 'when gives error because the order is flawed (duplicate id)' do
       before do
-        patch '/api/v1/user/cities/change_order', headers: { 'x-device-id' => user.device_id }, params: { cities_ids: [8,4,5,5] }
+        patch '/api/v1/user/cities/change_order', headers: { 'x-device-id' => user.device_id },
+                                                  params: { cities_ids: [8, 4, 5, 5] }
       end
 
       it 'returns duplicate id error message' do
@@ -162,7 +166,8 @@ RSpec.describe 'Users' do
 
     context 'when gives error because the order is flawed (flawed order) message' do
       before do
-        patch '/api/v1/user/cities/change_order', headers: { 'x-device-id' => user.device_id }, params: { cities_ids: [8,4,5,3] }
+        patch '/api/v1/user/cities/change_order', headers: { 'x-device-id' => user.device_id },
+                                                  params: { cities_ids: [8, 4, 5, 3] }
       end
 
       it 'returns flawed order of cities error message' do
@@ -176,7 +181,7 @@ RSpec.describe 'Users' do
   end
 
   describe 'ADD CITY' do
-    let(:user){ create(:user, device_id: 'k123v23hj213321jh12kj3123k', cities_ids: [5, 2, 4, 8]) }
+    let(:user) { create(:user, device_id: 'k123v23hj213321jh12kj3123k', cities_ids: [5, 2, 4, 8]) }
 
     before do
       create(:city, weather_id: 1, name: 'Stockholm', country: 'Sweden', latitude: 10, longitude: 10)
@@ -184,7 +189,9 @@ RSpec.describe 'Users' do
 
     context 'when adds a city as requested (assuming that city already exists in a table)' do
       before do
-        put '/api/v1/user/cities/add', headers: { 'x-device-id' => user.device_id }, params: { weather_id: 1, name: 'Stockholm', country: 'Sweden', latitude: 10, longitude: 10 }
+        put '/api/v1/user/cities/add', headers: { 'x-device-id' => user.device_id },
+                                       params: { weather_id: 1, name: 'Stockholm',
+                                                 country: 'Sweden', latitude: 10, longitude: 10 }
       end
 
       it 'returns created request status' do
@@ -193,14 +200,18 @@ RSpec.describe 'Users' do
 
       it 'adds a city to a list of users cities' do
         city = City.find_by(weather_id: 1)
-        expect(user.reload.cities_ids).to eq([5,2,4,8, city.id])
+        expect(user.reload.cities_ids).to eq([5, 2, 4, 8, city.id])
       end
     end
 
     context 'when adding an already existing city' do
       before do
-        put '/api/v1/user/cities/add', headers: { 'x-device-id' => user.device_id }, params: { weather_id: 1, name: 'Stockholm', country: 'Sweden', latitude: 10, longitude: 10 }
-        put '/api/v1/user/cities/add', headers: { 'x-device-id' => user.device_id }, params: { weather_id: 1, name: 'Stockholm', country: 'Sweden', latitude: 10, longitude: 10 }
+        put '/api/v1/user/cities/add', headers: { 'x-device-id' => user.device_id },
+                                       params: { weather_id: 1, name: 'Stockholm', country: 'Sweden',
+                                                 latitude: 10, longitude: 10 }
+        put '/api/v1/user/cities/add', headers: { 'x-device-id' => user.device_id },
+                                       params: { weather_id: 1, name: 'Stockholm', country: 'Sweden',
+                                                 latitude: 10, longitude: 10 }
       end
 
       it 'returns bad request request status' do
@@ -211,6 +222,5 @@ RSpec.describe 'Users' do
         expect(JSON.parse(response.body)['error']).to eq('the city is already added')
       end
     end
-
   end
 end

@@ -57,7 +57,7 @@ module Api
       private
 
       def weather_params
-        params.permit(:temperature, :weathercode, :windspeed, :is_day)
+        params.permit(:temperature, :weathercode, :windspeed, :is_day, :mode)
       end
 
       def permitted_params

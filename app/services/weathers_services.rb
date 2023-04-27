@@ -8,8 +8,7 @@ class WeathersService
     data_json = JSON.parse(current_weather(params[:latitude], params[:longitude]))
     keys = %i[temperature weathercode windspeed is_day]
     keys.each do |key|
-      byebug
-      if params.key?(key) && params[key] == 'true'
+      if params.key?(key.to_s) && params[key.to_s] == 'true'
         json_response = json_response.merge({ key => data_json['current_weather'][key.to_s] })
       end
     end
@@ -45,20 +44,18 @@ class WeathersService
   end
 
   def cities_weather(cities_ids, weather_params)
-    cities_ids.each do |id|
-      city = City.find(id)
-      params = { longitude: city.longitude, latitude: city.latitude }.merge(weather_params)
-      weather = retrieve_values(params)
-      byebug
-      city_response_message(city, weather)
+    cities_ids.map do |id|
+      city_response_message(id, weather_params)
     end
   end
 
-  private
-
-  def city_response_message(city, city_weather)
+  def city_response_message(id, weather_params)
+    city = City.find(id)
+    params = { longitude: city.longitude, latitude: city.latitude }.merge(weather_params)
+    city_weather = retrieve_current_weather(params)
     {
-      city_id: city.id, weather: city_weather, city_name: city.name, longitude: city.longitude, latitude: city.latitude
+      id: city.id, weather_id: city.weather_id, weather: city_weather, city_name: city.name,
+      longitude: city.longitude, latitude: city.latitude
     }
   end
 end
