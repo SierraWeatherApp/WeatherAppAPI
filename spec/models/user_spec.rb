@@ -19,16 +19,18 @@ RSpec.describe User do
     expect(described_class.new(cities_ids: user_test.cities_ids.push(3))).not_to be_valid
   end
 
-  context 'is valid to send correct temperature format' do
+  context 'when requested to update is valid to send correct temperature format' do
     it 'celsius' do
-      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag', temp_units: "celsius")).to be_valid
+      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag', temp_units: 'celsius')).to be_valid
     end
+
     it 'fahrenheit' do
-      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag', temp_units: "fahrenheit")).to be_valid
+      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag',
+                                 temp_units: 'fahrenheit')).to be_valid
     end
   end
 
   it 'is invalid to send incorrect temperature format' do
-    expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag', temp_units: "f")).not_to be_valid
+    expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag', temp_units: 'f')).not_to be_valid
   end
 end

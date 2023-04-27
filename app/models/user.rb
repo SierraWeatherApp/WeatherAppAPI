@@ -13,7 +13,7 @@ class User < ApplicationRecord
   end
 
   def temperature_units
-    return if temp_units == "celsius" || temp_units == "fahrenheit"
+    return if temp_units == 'celsius' || temp_units == 'fahrenheit'
 
     errors.add(:temp_units, 'incorrect_temp_format')
   end

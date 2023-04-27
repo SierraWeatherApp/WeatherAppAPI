@@ -10,26 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_18_135128) do
+ActiveRecord::Schema[7.0].define(version: 20_230_418_135_128) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension 'plpgsql'
 
-  create_table "cities", force: :cascade do |t|
-    t.bigint "weather_id"
-    t.string "name"
-    t.string "country"
-    t.float "latitude"
-    t.float "longitude"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'cities', force: :cascade do |t|
+    t.bigint 'weather_id'
+    t.string 'name'
+    t.string 'country'
+    t.float 'latitude'
+    t.float 'longitude'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "device_id"
-    t.string "temp_units", default: "celsius"
-    t.integer "cities_ids", default: [], array: true
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'users', force: :cascade do |t|
+    t.string 'device_id'
+    t.string 'temp_units', default: 'celsius'
+    t.integer 'cities_ids', default: [], array: true
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
-
 end

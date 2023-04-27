@@ -37,18 +37,18 @@ RSpec.describe 'Users' do
       let(:device_id) { 'k123v23hj213321jh12kj3123k' }
       let(:city_st) do
         create(:city, name: 'Stockholm', weather_id: 2_673_730, country: 'Sweden', latitude: 59.33459,
-               longitude: 18.06324)
+                      longitude: 18.06324)
       end
       let(:city_bs) do
         create(:city, name: 'Buenos Aires', weather_id: 3_435_910, country: 'Argentina', latitude: -34.61315,
-               longitude: -58.37723)
+                      longitude: -58.37723)
       end
 
-      context 'updates info' do
+      context 'when requested to update updates info' do
         before do
           create(:user, device_id:, cities_ids: [city_bs.id, city_st.id])
           patch '/api/v1/user?temp_unit=fahrenheit',
-              headers: { 'x-device-id' => device_id }
+                headers: { 'x-device-id' => device_id }
         end
 
         it 'returns success request status' do
@@ -61,7 +61,7 @@ RSpec.describe 'Users' do
         end
       end
 
-      context 'gives an error for temperature units' do
+      context 'when requested to be updated gives an error for temperature units' do
         before do
           create(:user, device_id:, cities_ids: [city_bs.id, city_st.id])
           patch '/api/v1/user?temp_unit=car',
@@ -76,7 +76,6 @@ RSpec.describe 'Users' do
           expect(JSON.parse(response.body)['error']).to eq('Validation failed: Temp units incorrect_temp_format')
         end
       end
-
     end
 
     context 'when user no exist, creates one' do
