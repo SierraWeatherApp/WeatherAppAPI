@@ -2,11 +2,10 @@ module Api
   module V1
     class UsersController < ApplicationController
       before_action :initialize_services
-      #@todo: change parts of info function
       def info
         response = { message: nil, status: :ok }
         begin
-          response[:message] = @user_service.build_user_response(@user)
+          response[:message] = { cities: @weather_service.cities_weather(@user.cities_ids, weather_params) }
         rescue StandardError => e
           response = { message: e, status: :internal_server_error }
         end
@@ -57,6 +56,10 @@ module Api
 
       private
 
+      def weather_params
+        params.permit(:temperature, :weathercode, :windspeed, :is_day)
+      end
+
       def permitted_params
         params.permit(:device_id)
       end
@@ -64,6 +67,7 @@ module Api
       def initialize_services
         @user_service = UsersService.new
         @city_service = CitiesService.new
+        @weather_service = WeathersService.new
       end
     end
   end

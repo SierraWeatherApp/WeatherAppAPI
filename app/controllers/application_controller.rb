@@ -11,8 +11,8 @@ class ApplicationController < ActionController::API
     @user = User.find_by(device_id: @device_id)
     return unless @user.blank?
 
-    @user = User.create!(device_id: @device_id)
-
+    city = City.find_by(weather_id: 2_673_730)
+    @user = User.create!(device_id: @device_id, cities_ids: [city.id])
   rescue StandardError => e
     response = { message: e, status: :internal_server_error }
     render json: response[:message], status: response[:status]

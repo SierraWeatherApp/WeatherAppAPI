@@ -2,7 +2,7 @@ module Api
   module V1
     class CitiesController < ApplicationController
       before_action :initialize_services
-      #@todo: change function show
+      # TODO: change function show
       def show
         response = { status_code: :ok, message: nil }
         city = City.find(params[:id])
@@ -14,7 +14,7 @@ module Api
         render json: response[:message], status: response[:status_code]
       end
 
-      def city_response(city)
+      def city_response(city, cities_ids)
         { id: city.id, weather_id: city.weather_id,
           longitude: city.longitude, latitude: city.latitude,
           name: city.name, country: city.country }
