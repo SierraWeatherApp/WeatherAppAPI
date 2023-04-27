@@ -26,9 +26,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_18_135128) do
 
   create_table "users", force: :cascade do |t|
     t.string "device_id"
-    t.string "temp_units", default: "C"
+    t.string "temp_units", default: "celsius"
     t.integer "cities_ids", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
 end

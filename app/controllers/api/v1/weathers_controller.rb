@@ -11,7 +11,7 @@ module Api
         begin
           valid_params?(%i[latitude longitude mode])
           if params[:mode] == 'cw' # cw -> current_weather
-            jsonresponse = @ws.retrieve_current_weather(params)
+            jsonresponse = @ws.retrieve_current_weather(params, @user.temp_units)
           elsif params[:mode] == 'tf' # tf -> time_frame
             valid_params?(%i[day])
             jsonresponse = @ws.retrieve_time_frame(params)

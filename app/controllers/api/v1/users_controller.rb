@@ -5,7 +5,7 @@ module Api
       def info
         response = { message: nil, status: :ok }
         begin
-          response[:message] = { cities: @weather_service.cities_weather(@user.cities_ids, weather_params) }
+          response[:message] = { cities: @weather_service.cities_weather(@user.cities_ids, weather_params, @user.temp_units) }
         rescue StandardError => e
           response = { message: e, status: :internal_server_error }
         end
@@ -54,7 +54,23 @@ module Api
         render json: response[:message], status: response[:status_code]
       end
 
+      def update
+        begin
+          @user.update!(temp_units: update_params[:temp_unit])
+
+          response = { message: nil,
+                       status_code: :ok }
+        rescue StandardError => e
+          response = { status_code: :bad_request, message: { error: e } }
+        end
+        render json: response[:message], status: response[:status_code]
+      end
+
       private
+
+      def update_params
+        params.permit(:temp_unit)
+      end
 
       def weather_params
         params.permit(:temperature, :weathercode, :windspeed, :is_day, :mode)

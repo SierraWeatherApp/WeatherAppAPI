@@ -33,6 +33,52 @@ RSpec.describe 'Users' do
       end
     end
 
+    describe 'updating user info' do
+      let(:device_id) { 'k123v23hj213321jh12kj3123k' }
+      let(:city_st) do
+        create(:city, name: 'Stockholm', weather_id: 2_673_730, country: 'Sweden', latitude: 59.33459,
+               longitude: 18.06324)
+      end
+      let(:city_bs) do
+        create(:city, name: 'Buenos Aires', weather_id: 3_435_910, country: 'Argentina', latitude: -34.61315,
+               longitude: -58.37723)
+      end
+
+      context 'updates info' do
+        before do
+          create(:user, device_id:, cities_ids: [city_bs.id, city_st.id])
+          patch '/api/v1/user?temp_unit=fahrenheit',
+              headers: { 'x-device-id' => device_id }
+        end
+
+        it 'returns success request status' do
+          expect(response).to have_http_status(:ok)
+        end
+
+        it 'saves information' do
+          user = User.find_by(device_id:)
+          expect(user.reload.temp_units).to eq('fahrenheit')
+        end
+      end
+
+      context 'gives an error for temperature units' do
+        before do
+          create(:user, device_id:, cities_ids: [city_bs.id, city_st.id])
+          patch '/api/v1/user?temp_unit=car',
+                headers: { 'x-device-id' => device_id }
+        end
+
+        it 'returns bad request status' do
+          expect(response).to have_http_status(:bad_request)
+        end
+
+        it 'gives incorrect_temp_format error message' do
+          expect(JSON.parse(response.body)['error']).to eq('Validation failed: Temp units incorrect_temp_format')
+        end
+      end
+
+    end
+
     context 'when user no exist, creates one' do
       let(:device_id) { 'k123v23hj213321jh12kj3123k' }
 
@@ -84,7 +130,7 @@ RSpec.describe 'Users' do
       end
     end
 
-    context('when tries to delete inexistent city in users list of cities') do
+    context('when tries to delete nonexistent city in users list of cities') do
       let(:user) { create(:user, device_id: 'k123v23hj213321jh12kj3123k', cities_ids: [2, 4, 8]) }
 
       before do

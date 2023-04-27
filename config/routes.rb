@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       get '/weather' => 'weathers#weather_info'
       get '/user' => 'users#info'
+      patch '/user' => 'users#update'
       resources :cities, only: %i[show]
       scope :user do
         scope :cities do
