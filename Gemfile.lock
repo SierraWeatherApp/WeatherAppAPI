@@ -93,6 +93,7 @@ GEM
     factory_bot_rails (6.2.0)
       factory_bot (~> 6.2.0)
       railties (>= 5.0.0)
+    ffi (1.15.5)
     ffi (1.15.5-x64-mingw-ucrt)
     ffi (1.15.5-x86-mingw32)
     globalid (1.1.0)
@@ -267,6 +268,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.8.2)
+    unf_ext (0.0.8.2-x64-mingw-ucrt)
     unf_ext (0.0.8.2-x86-mingw32)
     unicode-display_width (2.4.2)
     websocket-driver (0.7.5)
