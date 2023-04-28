@@ -28,9 +28,9 @@ RSpec.describe User do
       expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag',
                                  temp_units: 'fahrenheit')).to be_valid
     end
-  end
 
-  it 'is invalid to send incorrect temperature format' do
-    expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag', temp_units: 'f')).not_to be_valid
+    it 'is invalid to send incorrect temperature format' do
+      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag', temp_units: 'f')).not_to be_valid
+    end
   end
 end
