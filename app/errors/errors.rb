@@ -54,4 +54,26 @@ module Errors
       @argument = argument
     end
   end
+
+  class FlawedOrderError < StandardError
+    def initialize(argument)
+      super
+      @argument = argument
+    end
+
+    def message
+      @argument
+    end
+  end
+
+  class IncorrectAddError < StandardError
+    def initialize(argument)
+      super
+      @argument = argument
+    end
+
+    def message
+      @argument
+    end
+  end
 end
