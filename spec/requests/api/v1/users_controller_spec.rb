@@ -44,8 +44,8 @@ RSpec.describe 'Users' do
                       longitude: -58.37723)
       end
 
-      #@todo move to new description: updating info
-      #@todo create test for giving info to an already existing user
+      # @todo move to new description: updating info
+      # @todo create test for giving info to an already existing user
       context 'when requested to update temperature units' do
         before do
           create(:user, device_id:, cities_ids: [city_bs.id, city_st.id])
@@ -112,7 +112,7 @@ RSpec.describe 'Users' do
         expect(response).to have_http_status(:internal_server_error)
       end
 
-      #@todo check whether specified error message is sent
+      # @todo check whether specified error message is sent
     end
   end
 
