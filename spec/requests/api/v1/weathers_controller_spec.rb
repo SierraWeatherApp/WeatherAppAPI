@@ -7,7 +7,8 @@ RSpec.describe Api::V1::WeathersController do
   let(:user) { create(:user, device_id: '19238723y7dh3su2as21dfs231a213sd2af') }
 
   before do
-    get '/api/v1/weather?latitude=52.52&longitude=13.41&temperature=true&weathercode=true&windspeed=true&mode=cw',
+    get '/api/v1/weather?latitude=52.52&longitude=13.41&temperature=true&weathercode=true
+&windspeed=true&mode=cw&apparent_temperature=true&relativehumidity_2m=true',
         headers: { 'x-device-id' => user.device_id } # &apparent_temperature=true&relativehumidity_2m=true
     # get '/api/v1/weather?latitude=52.52&longitude=13.41&weathercode=true&day=7&temperature_2m_max=true&mode=tf',
     #     headers: { 'x-device-id' => user.device_id }
