@@ -15,7 +15,7 @@ RSpec.describe 'Users' do
 
       before do
         create(:user, device_id:, cities_ids: [city_bs.id, city_st.id])
-        get '/api/v1/user?temperature=true&weathercode=true&windspeed=true&is_day=true',
+        get '/api/v1/user?temperature=true&weathercode=true&windspeed=true&is_day=true&relativehumidity_2m=true',
             headers: { 'x-device-id' => device_id }
       end
 

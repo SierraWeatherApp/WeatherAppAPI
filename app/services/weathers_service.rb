@@ -12,8 +12,8 @@ class WeathersService
         json_response = json_response.merge({ key => data_json['current_weather'][key.to_s] })
       end
     end
-    if params.key?(:relativehumidity_2m) && params[:relativehumidity_2m] == 'true'
-      json_response = json_response.merge({ relativehumidity_2m: data_json['relativehumidity_2m'][Time.now.hour] })
+    if params.key?(:relativehumidity_2m.to_s) && params[:relativehumidity_2m.to_s] == 'true'
+      json_response = json_response.merge({ relativehumidity_2m: data_json['hourly']['relativehumidity_2m'][Time.now.hour] })
     end
     json_response
   end
