@@ -8,7 +8,7 @@ RSpec.describe Api::V1::WeathersController do
 
   before do
     get '/api/v1/weather?latitude=52.52&longitude=13.41&temperature=true&weathercode=true&windspeed=true&mode=cw',
-        headers: { 'x-device-id' => user.device_id }
+        headers: { 'x-device-id' => user.device_id } # &apparent_temperature=true&relativehumidity_2m=true
     # get '/api/v1/weather?latitude=52.52&longitude=13.41&weathercode=true&day=7&temperature_2m_max=true&mode=tf',
     #     headers: { 'x-device-id' => user.device_id }
   end
@@ -31,13 +31,17 @@ RSpec.describe Api::V1::WeathersController do
     end
 
     it 'returns humidity to be nil' do
-      expect(JSON.parse(response.body)['humidity']).to be_nil
+      expect(JSON.parse(response.body)['relativehumidity_2m']).to be_nil
     end
 
     it 'returns is_day to be nil' do
       expect(JSON.parse(response.body)['is_day']).to be_nil
     end
 
+    # it 'returns apparent temperature' do
+    #   expect(JSON.parse(response.body)['apparent_temperature']).to be_a(Float)
+    # end
+    #
     # it 'returns max temperature for days' do
     #   expect(JSON.parse(response.body)['temperature_2m_max']).not_to be_nil
     # end

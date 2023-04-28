@@ -6,14 +6,17 @@ class WeathersServices
   def retrieve_current_weather(params)
     json_response = {}
     data_json = JSON.parse(current_weather(params[:latitude], params[:longitude]))
-    keys = %i[temperature weathercode windspeed is_day]
-    keys.each do |key|
-      if params.key?(key) && params[key] == 'true'
-        json_response = json_response.merge({ key => data_json['current_weather'][key.to_s] })
+    keys1 = %i[temperature weathercode windspeed is_day apparent_temperature]
+    keys1.each do |key1|
+      if params.key?(key1) && params[key1] == 'true'
+        json_response = json_response.merge({ key1 => data_json['current_weather'][key1.to_s] })
       end
     end
-    if params.key?(:relativehumidity_2m) && params[:relativehumidity_2m] == 'true'
-      json_response = json_response.merge({ relativehumidity_2m: data_json['relativehumidity_2m'][Time.now.hour] })
+    keys2 = %i[relativehumidity_2m apparent_temperature]
+    keys2.each do |key2|
+      if params.key?(key2) && params[key2] == 'true'
+        json_response = json_response.merge({ key2 => data_json['hourly'][key2.to_s][Time.now.hour] })
+      end
     end
     json_response
   end
@@ -32,7 +35,7 @@ class WeathersServices
   # rubocop:enable Metrics/AbcSize
 
   def current_weather(latitude, longitude)
-    url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&hourly=relativehumidity_2m&hourly=temperature_2m&current_weather=true&forecast_days=1&windspeed_unit=ms"
+    url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&hourly=relativehumidity_2m&hourly=temperature_2m&hourly=apparent_temperature&current_weather=true&forecast_days=1&windspeed_unit=ms"
     uri = URI(url)
     Net::HTTP.get(uri)
   end
