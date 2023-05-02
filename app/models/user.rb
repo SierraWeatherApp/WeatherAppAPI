@@ -6,7 +6,6 @@ class User < ApplicationRecord
   validate :temperature_units
   validate :gender_name
 
-
   private
 
   def duplicate_check
