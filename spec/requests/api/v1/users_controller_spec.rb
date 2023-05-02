@@ -32,7 +32,7 @@ RSpec.describe 'Users' do
         expect(JSON.parse(response.body)['cities'][0]['id']).to eq(city_bs.id)
       end
     end
-    
+
     context 'when no user exist, creates one' do
       let(:device_id) { 'k123v23hj213321jh12kj3123k' }
 
@@ -122,7 +122,7 @@ RSpec.describe 'Users' do
         expect(JSON.parse(response.body)['error']).to eq('Validation failed: Temp unit incorrect_temp_format')
       end
     end
-    
+
     context 'when requested to update gender' do
       before do
         patch '/api/v1/user?gender=male',
