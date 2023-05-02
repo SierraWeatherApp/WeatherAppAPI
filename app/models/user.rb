@@ -3,6 +3,8 @@ class User < ApplicationRecord
   validates_uniqueness_of :device_id
   validate :duplicate_check
   validate :temperature_units
+  validate :gender_name
+  validate :look_number
 
   private
 
@@ -17,4 +19,17 @@ class User < ApplicationRecord
 
     errors.add(:temp_units, 'incorrect_temp_format')
   end
+
+  def gender_name
+    return if gender == 'female' || gender == 'male'
+
+    errors.add(:gender, 'incorrect_gender_format')
+  end
+
+  def look_number
+    return if look >= 0
+
+    errors.add(:gender, 'incorrect_look_format')
+  end
+
 end
