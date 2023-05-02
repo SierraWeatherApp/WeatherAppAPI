@@ -14,7 +14,7 @@ class WeathersService
     end
     keys2 = %i[relativehumidity_2m apparent_temperature]
     keys2.each do |key2|
-      if params.key?(key2) && params[key2] == 'true'
+      if params.key?(key2.to_s) && params[key2.to_s] == 'true'
         json_response = json_response.merge({ key2 => data_json['hourly'][key2.to_s][Time.now.hour] })
       end
     end

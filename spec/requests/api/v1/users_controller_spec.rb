@@ -15,7 +15,8 @@ RSpec.describe 'Users' do
 
       before do
         create(:user, device_id:, cities_ids: [city_bs.id, city_st.id])
-        get '/api/v1/user?temperature=true&weathercode=true&windspeed=true&is_day=true&relativehumidity_2m=true',
+        get '/api/v1/user?temperature=true&weathercode=true&windspeed=true&is_day=true&relativehumidity_2m=true
+&apparent_temperature=true',
             headers: { 'x-device-id' => device_id }
       end
 
@@ -30,6 +31,14 @@ RSpec.describe 'Users' do
 
       it 'returns the cities ids and their weather' do
         expect(JSON.parse(response.body)['cities'][0]['id']).to eq(city_bs.id)
+      end
+
+      it 'returns the relative humidity' do
+        expect(JSON.parse(response.body)['cities'][0]['weather']['relativehumidity_2m']).to be_a(Integer)
+      end
+
+      it 'returns the apparent temperature' do
+        expect(JSON.parse(response.body)['cities'][0]['weather']['apparent_temperature']).to be_a(Float)
       end
     end
 
