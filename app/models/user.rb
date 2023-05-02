@@ -1,8 +1,7 @@
 class User < ApplicationRecord
   validates_presence_of :device_id
   validates_uniqueness_of :device_id
-  validate :duplicate_check
-  validate :temperature_units
+  validate :duplicate_check, :temperature_units
 
   private
 
