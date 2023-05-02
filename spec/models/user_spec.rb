@@ -49,6 +49,7 @@ RSpec.describe User do
       expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag',
              gender: '-')).not_to be_valid
     end
+  end
 
   context 'when requested to update looks' do
     it 'is valid to change look to number larger or equal to zero' do
