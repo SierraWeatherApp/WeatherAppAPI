@@ -21,16 +21,16 @@ RSpec.describe User do
 
   context 'when requested to update temperature units' do
     it 'is valid to change to celsius' do
-      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag', temp_units: 'celsius')).to be_valid
+      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag', temp_unit: 'celsius')).to be_valid
     end
 
     it 'is valid to change to fahrenheit' do
       expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag',
-                                 temp_units: 'fahrenheit')).to be_valid
+                                 temp_unit: 'fahrenheit')).to be_valid
     end
 
     it 'is invalid to change to incorrect temperature format' do
-      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag', temp_units: 'f')).not_to be_valid
+      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag', temp_unit: 'f')).not_to be_valid
     end
   end
 
@@ -60,6 +60,11 @@ RSpec.describe User do
     it 'is invalid to change look to number that is smaller than zero' do
       expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag',
                                  look: -1)).not_to be_valid
+    end
+
+    it 'is invalid to change look to anything but a number' do
+      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag',
+                                 look: 'h')).not_to be_valid
     end
   end
 end
