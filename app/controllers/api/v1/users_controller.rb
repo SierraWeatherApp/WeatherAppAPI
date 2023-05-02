@@ -5,7 +5,7 @@ module Api
       def info
         response = { message: nil, status: :ok }
         begin
-          response[:message] =
+          response[:message] = 
             { cities: @weather_service.cities_weather(@user.cities_ids, weather_params, @user.temp_unit) }
         rescue StandardError => e
           response = { message: e, status: :internal_server_error }
@@ -74,7 +74,8 @@ module Api
       end
 
       def weather_params
-        params.permit(:temperature, :weathercode, :windspeed, :is_day, :mode, :relativehumidity_2m)
+        params.permit(:temperature, :weathercode, :windspeed, :is_day, :mode, :relativehumidity_2m,
+                      :apparent_temperature)
       end
 
       def permitted_params
