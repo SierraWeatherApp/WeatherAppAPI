@@ -26,5 +26,4 @@ class User < ApplicationRecord
 
     errors.add(:gender, 'incorrect_gender_format')
   end
-
 end

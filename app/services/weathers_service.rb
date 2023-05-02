@@ -35,7 +35,7 @@ class WeathersService
   # rubocop:enable Metrics/AbcSize
 
   def current_weather(latitude, longitude, temp_unit)
-    url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&hourly=relativehumidity_2m&hourly=temperature_2m&current_weather=true&forecast_days=1&windspeed_unit=ms&temperature_unit=#{temp_unit}"
+    url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&hourly=relativehumidity_2m&hourly=temperature_2m&hourly=apparent_temperature&current_weather=true&forecast_days=1&windspeed_unit=ms&temperature_unit=#{temp_unit}"
     uri = URI(url)
     Net::HTTP.get(uri)
   end

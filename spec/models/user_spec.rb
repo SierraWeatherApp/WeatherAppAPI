@@ -36,18 +36,15 @@ RSpec.describe User do
 
   context 'when requested to update gender' do
     it 'is valid to change to female' do
-      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag',
-             gender: 'female')).to be_valid
+      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag', gender: 'female')).to be_valid
     end
 
     it 'is valid to change to male' do
-      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag',
-             gender: 'male')).to be_valid
+      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag', gender: 'male')).to be_valid
     end
 
     it 'is invalid to change to incorrect gender format' do
-      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag',
-             gender: '-')).not_to be_valid
+      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag', gender: '-')).not_to be_valid
     end
   end
 
