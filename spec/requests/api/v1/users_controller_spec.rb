@@ -97,9 +97,13 @@ RSpec.describe 'Users' do
         expect(user.reload.temp_unit).to eq('fahrenheit')
       end
 
-      it 'does not change other information about the user' do
+      it 'does not change gender' do
         user = User.find_by(device_id:)
         expect(user.reload.gender).to eq('female')
+      end
+
+      it 'does not change look' do
+        user = User.find_by(device_id:)
         expect(user.reload.look).to eq(0)
       end
     end
@@ -134,9 +138,13 @@ RSpec.describe 'Users' do
         expect(user.reload.gender).to eq('male')
       end
 
-      it 'does not change other information about the user' do
+      it 'does not change temperature' do
         user = User.find_by(device_id:)
         expect(user.reload.temp_unit).to eq('celsius')
+      end
+
+      it 'does not change look' do
+        user = User.find_by(device_id:)
         expect(user.reload.look).to eq(0)
       end
     end
@@ -171,9 +179,13 @@ RSpec.describe 'Users' do
         expect(user.reload.look).to eq(9)
       end
 
-      it 'does not change other information about the user' do
+      it 'does not change temperature' do
         user = User.find_by(device_id:)
         expect(user.reload.temp_unit).to eq('celsius')
+      end
+
+      it 'does not change gender' do
+        user = User.find_by(device_id:)
         expect(user.reload.gender).to eq('female')
       end
     end
