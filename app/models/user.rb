@@ -1,7 +1,8 @@
 class User < ApplicationRecord
   validates_presence_of :device_id
   validates_uniqueness_of :device_id
-  validate :duplicate_check, :temperature_units
+  validates :look, numericality: true, comparison: { greater_than_or_equal_to: 0 }
+  validate :duplicate_check, :temperature_unit, :gender_name
 
   private
 
@@ -11,9 +12,15 @@ class User < ApplicationRecord
     errors.add(:cities_ids, 'repeating_entry')
   end
 
-  def temperature_units
-    return if temp_units == 'celsius' || temp_units == 'fahrenheit'
+  def temperature_unit
+    return if temp_unit == 'celsius' || temp_unit == 'fahrenheit'
 
-    errors.add(:temp_units, 'incorrect_temp_format')
+    errors.add(:temp_unit, 'incorrect_temp_format')
+  end
+
+  def gender_name
+    return if gender == 'female' || gender == 'male'
+
+    errors.add(:gender, 'incorrect_gender_format')
   end
 end

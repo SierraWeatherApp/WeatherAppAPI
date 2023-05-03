@@ -19,18 +19,49 @@ RSpec.describe User do
     expect(described_class.new(cities_ids: user_test.cities_ids.push(3))).not_to be_valid
   end
 
-  context 'when requested to update is valid to send correct temperature format' do
-    it 'celsius' do
-      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag', temp_units: 'celsius')).to be_valid
+  context 'when requested to update temperature units' do
+    it 'is valid to change to celsius' do
+      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag', temp_unit: 'celsius')).to be_valid
     end
 
-    it 'fahrenheit' do
+    it 'is valid to change to fahrenheit' do
       expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag',
-                                 temp_units: 'fahrenheit')).to be_valid
+                                 temp_unit: 'fahrenheit')).to be_valid
     end
 
-    it 'is invalid to send incorrect temperature format' do
-      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag', temp_units: 'f')).not_to be_valid
+    it 'is invalid to change to incorrect temperature format' do
+      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag', temp_unit: 'f')).not_to be_valid
+    end
+  end
+
+  context 'when requested to update gender' do
+    it 'is valid to change to female' do
+      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag', gender: 'female')).to be_valid
+    end
+
+    it 'is valid to change to male' do
+      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag', gender: 'male')).to be_valid
+    end
+
+    it 'is invalid to change to incorrect gender format' do
+      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag', gender: '-')).not_to be_valid
+    end
+  end
+
+  context 'when requested to update looks' do
+    it 'is valid to change look to number larger or equal to zero' do
+      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag',
+                                 look: 1)).to be_valid
+    end
+
+    it 'is invalid to change look to number that is smaller than zero' do
+      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag',
+                                 look: -1)).not_to be_valid
+    end
+
+    it 'is invalid to change look to anything but a number' do
+      expect(described_class.new(device_id: '19238723y7dh3su2as21dfs231a213sd2ag',
+                                 look: 'h')).not_to be_valid
     end
   end
 end

@@ -3,9 +3,9 @@
 require 'json'
 class WeathersService
   # rubocop:disable Metrics/AbcSize
-  def retrieve_current_weather(params, temp_units)
+  def retrieve_current_weather(params, temp_unit)
     json_response = {}
-    data_json = JSON.parse(current_weather(params[:latitude], params[:longitude], temp_units))
+    data_json = JSON.parse(current_weather(params[:latitude], params[:longitude], temp_unit))
     keys = %i[temperature weathercode windspeed is_day]
     keys.each do |key|
       if params.key?(key.to_s) && params[key.to_s] == 'true'
@@ -34,8 +34,8 @@ class WeathersService
   end
   # rubocop:enable Metrics/AbcSize
 
-  def current_weather(latitude, longitude, temp_units)
-    url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&hourly=relativehumidity_2m&hourly=temperature_2m&hourly=apparent_temperature&current_weather=true&forecast_days=1&windspeed_unit=ms&temperature_unit=#{temp_units}"
+  def current_weather(latitude, longitude, temp_unit)
+    url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&hourly=relativehumidity_2m&hourly=temperature_2m&hourly=apparent_temperature&current_weather=true&forecast_days=1&windspeed_unit=ms&temperature_unit=#{temp_unit}"
     uri = URI(url)
     Net::HTTP.get(uri)
   end
@@ -46,16 +46,16 @@ class WeathersService
     Net::HTTP.get(uri)
   end
 
-  def cities_weather(cities_ids, weather_params, temp_units)
+  def cities_weather(cities_ids, weather_params, temp_unit)
     cities_ids.map do |id|
-      city_response_message(id, weather_params, temp_units)
+      city_response_message(id, weather_params, temp_unit)
     end
   end
 
-  def city_response_message(id, weather_params, temp_units)
+  def city_response_message(id, weather_params, temp_unit)
     city = City.find(id)
     params = { longitude: city.longitude, latitude: city.latitude }.merge(weather_params)
-    city_weather = retrieve_current_weather(params, temp_units)
+    city_weather = retrieve_current_weather(params, temp_unit)
     {
       id: city.id, weather_id: city.weather_id, weather: city_weather, city_name: city.name,
       longitude: city.longitude, latitude: city.latitude

@@ -26,7 +26,9 @@ ActiveRecord::Schema[7.0].define(version: 20_230_418_135_128) do
 
   create_table 'users', force: :cascade do |t|
     t.string 'device_id'
-    t.string 'temp_units', default: 'celsius'
+    t.string 'temp_unit', default: 'celsius'
+    t.string 'gender', default: 'female'
+    t.integer 'look', default: 0
     t.integer 'cities_ids', default: [], array: true
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false

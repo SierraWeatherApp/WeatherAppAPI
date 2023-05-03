@@ -42,54 +42,7 @@ RSpec.describe 'Users' do
       end
     end
 
-    describe 'updating user info' do
-      let(:device_id) { 'k123v23hj213321jh12kj3123k' }
-      let(:city_st) do
-        create(:city, name: 'Stockholm', weather_id: 2_673_730, country: 'Sweden', latitude: 59.33459,
-                      longitude: 18.06324)
-      end
-      let(:city_bs) do
-        create(:city, name: 'Buenos Aires', weather_id: 3_435_910, country: 'Argentina', latitude: -34.61315,
-                      longitude: -58.37723)
-      end
-
-      # @todo move to new description: updating info
-      # @todo create test for giving info to an already existing user
-      context 'when requested to update temperature units' do
-        before do
-          create(:user, device_id:, cities_ids: [city_bs.id, city_st.id])
-          patch '/api/v1/user?temp_unit=fahrenheit',
-                headers: { 'x-device-id' => device_id }
-        end
-
-        it 'returns success request status' do
-          expect(response).to have_http_status(:ok)
-        end
-
-        it 'saves information' do
-          user = User.find_by(device_id:)
-          expect(user.reload.temp_units).to eq('fahrenheit')
-        end
-      end
-
-      context 'when requested to update temperature units with incorrect parameters' do
-        before do
-          create(:user, device_id:, cities_ids: [city_bs.id, city_st.id])
-          patch '/api/v1/user?temp_unit=car',
-                headers: { 'x-device-id' => device_id }
-        end
-
-        it 'returns bad request status' do
-          expect(response).to have_http_status(:bad_request)
-        end
-
-        it 'returns a specified error message' do
-          expect(JSON.parse(response.body)['error']).to eq('Validation failed: Temp units incorrect_temp_format')
-        end
-      end
-    end
-
-    context 'when the user does not exist' do
+    context 'when no user exist, creates one' do
       let(:device_id) { 'k123v23hj213321jh12kj3123k' }
 
       before do
@@ -102,7 +55,7 @@ RSpec.describe 'Users' do
         expect(response).to have_http_status(:ok)
       end
 
-      it 'creates a user' do
+      it 'creates user' do
         user = User.find_by(device_id:)
         expect(user.device_id).to eq(device_id)
       end
@@ -112,13 +65,167 @@ RSpec.describe 'Users' do
       end
     end
 
-    context 'when the device_id is not sent' do
+    context 'when device_id is not sent' do
       before do
         get '/api/v1/user'
       end
 
       it 'returns internal server error status' do
         expect(response).to have_http_status(:internal_server_error)
+      end
+    end
+  end
+
+  describe 'updating user info' do
+    let(:device_id) { 'k123v23hj213321jh12kj3123k' }
+    let(:city_st) do
+      create(:city, name: 'Stockholm', weather_id: 2_673_730, country: 'Sweden', latitude: 59.33459,
+                    longitude: 18.06324)
+    end
+    let(:city_bs) do
+      create(:city, name: 'Buenos Aires', weather_id: 3_435_910, country: 'Argentina', latitude: -34.61315,
+                    longitude: -58.37723)
+    end
+
+    before do
+      create(:user, device_id:, cities_ids: [city_bs.id, city_st.id])
+    end
+
+    context 'when requested to update temperature unit' do
+      before do
+        patch '/api/v1/user?temp_unit=fahrenheit',
+              headers: { 'x-device-id' => device_id }
+      end
+
+      it 'returns success request status' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'saves information' do
+        user = User.find_by(device_id:)
+        expect(user.reload.temp_unit).to eq('fahrenheit')
+      end
+
+      it 'does not change gender' do
+        user = User.find_by(device_id:)
+        expect(user.reload.gender).to eq('female')
+      end
+
+      it 'does not change look' do
+        user = User.find_by(device_id:)
+        expect(user.reload.look).to eq(0)
+      end
+    end
+
+    context 'when requested to update temp_unit with incorrect data format' do
+      before do
+        patch '/api/v1/user?temp_unit=car',
+              headers: { 'x-device-id' => device_id }
+      end
+
+      it 'returns bad request status' do
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'gives incorrect_temp_format error message' do
+        expect(JSON.parse(response.body)['error']).to eq('Validation failed: Temp unit incorrect_temp_format')
+      end
+    end
+
+    context 'when requested to update gender' do
+      before do
+        patch '/api/v1/user?gender=male',
+              headers: { 'x-device-id' => device_id }
+      end
+
+      it 'returns success request status' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'saves information' do
+        user = User.find_by(device_id:)
+        expect(user.reload.gender).to eq('male')
+      end
+
+      it 'does not change temperature' do
+        user = User.find_by(device_id:)
+        expect(user.reload.temp_unit).to eq('celsius')
+      end
+
+      it 'does not change look' do
+        user = User.find_by(device_id:)
+        expect(user.reload.look).to eq(0)
+      end
+    end
+
+    context 'when requested to update gender with incorrect data format' do
+      before do
+        patch '/api/v1/user?gender=gender',
+              headers: { 'x-device-id' => device_id }
+      end
+
+      it 'returns bad request status' do
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'gives incorrect_gender_format error message' do
+        expect(JSON.parse(response.body)['error']).to eq('Validation failed: Gender incorrect_gender_format')
+      end
+    end
+
+    context 'when requested to update look' do
+      before do
+        patch '/api/v1/user?look=9',
+              headers: { 'x-device-id' => device_id }
+      end
+
+      it 'returns success request status' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'saves information' do
+        user = User.find_by(device_id:)
+        expect(user.reload.look).to eq(9)
+      end
+
+      it 'does not change temperature' do
+        user = User.find_by(device_id:)
+        expect(user.reload.temp_unit).to eq('celsius')
+      end
+
+      it 'does not change gender' do
+        user = User.find_by(device_id:)
+        expect(user.reload.gender).to eq('female')
+      end
+    end
+
+    context 'when requested to update look with incorrect data format (not an integer)' do
+      before do
+        patch '/api/v1/user?look=h',
+              headers: { 'x-device-id' => device_id }
+      end
+
+      it 'returns bad request status' do
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'gives incorrect_look_format error message' do
+        expect(JSON.parse(response.body)['error']).to eq('Validation failed: Look is not a number')
+      end
+    end
+
+    context 'when requested to update look with incorrect data format (number smaller than zero)' do
+      before do
+        patch '/api/v1/user?look=-1',
+              headers: { 'x-device-id' => device_id }
+      end
+
+      it 'returns bad request status' do
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'gives incorrect_look_format error message' do
+        expect(JSON.parse(response.body)['error']).to eq('Validation failed: Look must be greater than or equal to 0')
       end
 
       # @todo check whether specified error message is sent
