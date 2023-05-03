@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_230_418_135_128) do
+ActiveRecord::Schema[7.0].define(version: 20_230_503_070_952) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -24,12 +24,21 @@ ActiveRecord::Schema[7.0].define(version: 20_230_418_135_128) do
     t.datetime 'updated_at', null: false
   end
 
+  create_table 'questions', force: :cascade do |t|
+    t.string 'question'
+    t.integer 'min', default: 0
+    t.integer 'max', default: 1
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+  end
+
   create_table 'users', force: :cascade do |t|
     t.string 'device_id'
     t.string 'temp_unit', default: 'celsius'
     t.string 'gender', default: 'female'
     t.integer 'look', default: 0
     t.integer 'cities_ids', default: [], array: true
+    t.json 'answers', default: {}
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
   end
