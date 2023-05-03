@@ -6,6 +6,7 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :gender, default: 'female'
       t.integer :look, default: 0
       t.integer :cities_ids, array: true, default: []
+      t.json :answers, default: {}
       t.timestamps
     end
   end

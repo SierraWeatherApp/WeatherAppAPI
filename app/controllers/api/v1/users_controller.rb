@@ -13,6 +13,26 @@ module Api
         render json: response[:message], status: response[:status]
       end
 
+      def all
+        response = { status_code: :ok, message: nil }
+        begin
+          response[:message] = { questions: @question_service.questions_answers(@user) }
+        rescue StandardError => e
+          response = { status_code: :internal_server_error, message: { error: e } }
+        end
+        render json: response[:message], status: response[:status_code]
+      end
+
+      def answers
+        response = { status_code: :ok, message: nil }
+        begin
+          @question_service.modify_answers(@user, params[:questions])
+        rescue StandardError => e
+          response = { status_code: :internal_server_error, message: { error: e } }
+        end
+        render json: response[:message], status: response[:status_code]
+      end
+
       def destroy
         response = { status_code: :ok, message: nil }
         begin
@@ -86,6 +106,7 @@ module Api
         @user_service = UsersService.new
         @city_service = CitiesService.new
         @weather_service = WeathersService.new
+        @question_service = QuestionsService.new
       end
     end
   end

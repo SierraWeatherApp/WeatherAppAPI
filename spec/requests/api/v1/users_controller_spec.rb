@@ -388,4 +388,56 @@ RSpec.describe 'Users' do
       end
     end
   end
+
+  describe 'GET QUESTIONS' do
+    let(:device_id) { 'k123v23hj213321jh12kj3123k' }
+    let!(:question) { create(:question, question: 'Do you like robots?') }
+    let!(:question2) { create(:question, question: 'Do you like apples?') }
+
+    before do
+      create(:city, name: 'Stockholm', weather_id: 2_673_730, country: 'Sweden', latitude: 59.33459,
+                    longitude: 18.06324)
+    end
+
+    context 'when requested questions' do
+      before do
+        get '/api/v1/user/questions/all', headers: { 'x-device-id' => device_id }
+      end
+
+      it 'returns ok request status' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'returns question 1 with correct id' do
+        expect(JSON.parse(response.body)['questions'][0]['question_id']).to eq(question.id)
+      end
+
+      it 'returns question 2 with correct id' do
+        expect(JSON.parse(response.body)['questions'][1]['question_id']).to eq(question2.id)
+      end
+
+      it 'returns question 2 with answer 0' do
+        expect(JSON.parse(response.body)['questions'][1]['answer']).to eq(0)
+      end
+    end
+
+    context 'when modified questions' do
+      before do
+        patch '/api/v1/user/questions/answer', headers: { 'x-device-id' => device_id },
+                                               params: { questions: { "#{question.id}": 1, "#{question2.id}": 1 } }
+      end
+
+      it 'returns ok request status' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'returns ok when modifies question successfully' do
+        expect(User.first.answers[question.id.to_s]).to eq(1)
+      end
+
+      it 'returns nil when modifies more than one question correctly' do
+        expect(User.first.answers[question2.id.to_s]).to eq(1)
+      end
+    end
+  end
 end
