@@ -17,4 +17,3 @@ class Question < ApplicationRecord
     errors.add(:min, '0 must be between min and max values')
   end
 end
-

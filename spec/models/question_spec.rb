@@ -25,4 +25,3 @@ RSpec.describe Question do
     expect(described_class.new(question: 'Do you like studying', min: 1, max: 5)).not_to be_valid
   end
 end
-

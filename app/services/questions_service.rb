@@ -15,4 +15,3 @@ class QuestionsService
     user.save!
   end
 end
-

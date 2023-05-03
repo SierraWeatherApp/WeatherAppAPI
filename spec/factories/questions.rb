@@ -5,4 +5,3 @@ FactoryBot.define do
     max { 1 }
   end
 end
-
