@@ -7,7 +7,7 @@ module Api
         city = City.find(params[:id])
         if city
           response[:message] =
-            @weather_service.city_response_message(city.id, weather_params, @user.temp_unit)
+            @weather_service.city_response_message(city.id, @user.temp_unit)
         else
           response = { status_code: :bad_request, message: { error: 'record_not_found' } }
         end
