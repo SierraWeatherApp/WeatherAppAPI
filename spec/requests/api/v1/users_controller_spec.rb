@@ -40,6 +40,14 @@ RSpec.describe 'Users' do
       it 'returns the apparent temperature' do
         expect(JSON.parse(response.body)['cities'][0]['weather']['apparent_temperature']).to be_a(Float)
       end
+
+      it 'returns the precipitation probability' do
+        expect(JSON.parse(response.body)['cities'][0]['weather']['precipitation_probability']).to be_a(Integer)
+      end
+
+      it 'returns the direct radiation' do
+        expect(JSON.parse(response.body)['cities'][0]['weather']['direct_radiation']).to be_a(Float)
+      end
     end
 
     context 'when no user exist, creates one' do
