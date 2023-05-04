@@ -46,19 +46,30 @@ class WeathersService
     Net::HTTP.get(uri)
   end
 
-  def cities_weather(cities_ids, weather_params, temp_unit)
+  def cities_weather(cities_ids, weather_params, temp_unit, user_answers)
     cities_ids.map do |id|
-      city_response_message(id, weather_params, temp_unit)
+      city_response_message(id, weather_params, temp_unit, user_answers)
     end
   end
 
-  def city_response_message(id, weather_params, temp_unit)
+  def retrieve_cloths_recommendation(weather_params, user_answers)
+    JSON.parse(cloths_communication(weather_params, user_answers))
+  end
+
+  def cloths_communication(weather_params, user_answers)
+    url = "https://127.0.0.1:4444/recommendation?apparent_temperature=#{weather_params[:apparent_temperature]}&temperature_2m=#{weather_params[:temperature_2m]}&relativehumidity_2m=#{weather_params[:relativehumidity_2m]}&windspeed_10m=#{weather_params[:windspeed_10m]}&precipitation_probability=#{weather_params[:precipitation_probability]}&direct_radiation=#{weather_params[:direct_radiation]}"
+    uri = URL(url)
+    Net::HTTP.get(uri)
+  end
+
+  def city_response_message(id, weather_params, temp_unit, user_answers)
     city = City.find(id)
     params = { longitude: city.longitude, latitude: city.latitude }.merge(weather_params)
     city_weather = retrieve_current_weather(params, temp_unit)
+    cloths_recommendation = retrieve_cloths_recommendation(city_weather, user_answers)
     {
       id: city.id, weather_id: city.weather_id, weather: city_weather, city_name: city.name,
-      longitude: city.longitude, latitude: city.latitude
+      longitude: city.longitude, latitude: city.latitude, recommendation: cloths_recommendation
     }
   end
 end
