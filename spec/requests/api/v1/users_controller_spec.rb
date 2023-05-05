@@ -48,6 +48,10 @@ RSpec.describe 'Users' do
       it 'returns the direct radiation' do
         expect(JSON.parse(response.body)['cities'][0]['weather']['direct_radiation']).to be_a(Float)
       end
+
+      it 'returns the user temp unit' do
+        expect(JSON.parse(response.body)['user_temp_unit']).to eq('celsius')
+      end
     end
 
     context 'when no user exist, creates one' do
