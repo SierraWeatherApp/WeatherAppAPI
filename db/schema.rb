@@ -26,6 +26,7 @@ ActiveRecord::Schema[7.0].define(version: 20_230_503_070_952) do
 
   create_table 'questions', force: :cascade do |t|
     t.string 'question'
+    t.integer 'label'
     t.integer 'min', default: 0
     t.integer 'max', default: 1
     t.datetime 'created_at', null: false

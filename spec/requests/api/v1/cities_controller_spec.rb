@@ -10,6 +10,11 @@ RSpec.describe 'Cities' do
     end
 
     before do
+      create(:question, question: 'Do you like to wear caps?', label: :sandalUser)
+      create(:question, question: 'Do you wear shorts at all?', label: :shortUser)
+      create(:question, question: 'Do you wear sandals at all?', label: :capUser)
+      create(:question, question: 'Are you warmer or colder dressed than the people around you?', label: :userPlace)
+      create(:question, question: 'Do you live in a hot or cold place?', label: :userTemp)
       get "/api/v1/cities/#{city.id}?temperature=true&weathercode=true&windspeed=true&is_day=true",
           headers: { 'x-device-id' => user.device_id }
     end
@@ -24,6 +29,10 @@ RSpec.describe 'Cities' do
 
     it 'returns id' do
       expect(JSON.parse(response.body)['id']).to eq(city.id)
+    end
+
+    it 'returns recommendation' do
+      expect(JSON.parse(response.body)['recommendation']).not_to be_nil
     end
   end
 end

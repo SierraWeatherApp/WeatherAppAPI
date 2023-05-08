@@ -29,7 +29,7 @@ class ApplicationController < ActionController::API
     questions = Question.all
     answers = {}
     questions.each do |question|
-      answers = answers.merge({ question.id.to_s => 0 })
+      answers = answers.merge({ question.label => 0 })
     end
     @user = User.create!(device_id: @device_id, cities_ids: [city.id], answers:)
   end

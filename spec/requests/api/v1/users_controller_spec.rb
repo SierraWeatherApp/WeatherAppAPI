@@ -1,6 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe 'Users' do
+
+  let!(:question) { create(:question, question: 'Do you like to wear caps?', label: :sandalUser) }
+  let!(:question2) { create(:question, question: 'Do you wear shorts at all?', label: :shortUser) }
+
+  before do
+    create(:question, question: 'Do you wear sandals at all?', label: :capUser)
+    create(:question, question: 'Are you warmer or colder dressed than the people around you?', label: :userPlace)
+    create(:question, question: 'Do you live in a hot or cold place?', label: :userTemp)
+  end
+
   describe 'GET /info' do
     context 'when the information is requested' do
       let(:device_id) { 'k123v23hj213321jh12kj3123k' }
@@ -15,9 +25,11 @@ RSpec.describe 'Users' do
 
       before do
         create(:user, device_id:, cities_ids: [city_bs.id, city_st.id])
-        get '/api/v1/user?temperature=true&weathercode=true&windspeed=true&is_day=true&relativehumidity_2m=true
+        VCR.use_cassette('userInfo_index') do
+          get '/api/v1/user?temperature=true&weathercode=true&windspeed=true&is_day=true&relativehumidity_2m=true
 &apparent_temperature=true',
-            headers: { 'x-device-id' => device_id }
+              headers: { 'x-device-id' => device_id }
+        end
       end
 
       it 'returns success request status' do
@@ -29,8 +41,12 @@ RSpec.describe 'Users' do
         expect(user.device_id).to eq(device_id)
       end
 
-      it 'returns the cities ids and their weather' do
+      it 'returns one city id' do
         expect(JSON.parse(response.body)['cities'][0]['id']).to eq(city_bs.id)
+      end
+
+      it 'returns another city id' do
+        expect(JSON.parse(response.body)['cities'][1]['id']).to eq(city_st.id)
       end
 
       it 'returns the relative humidity' do
@@ -48,6 +64,10 @@ RSpec.describe 'Users' do
       it 'returns the direct radiation' do
         expect(JSON.parse(response.body)['cities'][0]['weather']['direct_radiation']).to be_a(Float)
       end
+
+      it 'returns the clothing recommendation' do
+        expect(JSON.parse(response.body)['cities'][0]['recommendation']).to be_a(Array)
+      end
     end
 
     context 'when no user exist, creates one' do
@@ -56,7 +76,9 @@ RSpec.describe 'Users' do
       before do
         create(:city, name: 'Stockholm', weather_id: 2_673_730, country: 'Sweden', latitude: 59.33459,
                       longitude: 18.06324)
-        get '/api/v1/user', headers: { 'x-device-id' => device_id }
+        VCR.use_cassette('userNewInfo_index') do
+          get '/api/v1/user', headers: { 'x-device-id' => device_id }
+        end
       end
 
       it 'returns success request status' do
@@ -66,6 +88,12 @@ RSpec.describe 'Users' do
       it 'creates user' do
         user = User.find_by(device_id:)
         expect(user.device_id).to eq(device_id)
+      end
+
+      it 'creates default answers' do
+        user = User.find_by(device_id:)
+        expect(user.answers).to eq({ 'sandalUser' => 0, 'shortUser' => 0, 'capUser' => 0, 'userPlace' => 0,
+                                     'userTemp' => 0 })
       end
 
       it 'returns the main city' do
@@ -377,7 +405,7 @@ RSpec.describe 'Users' do
       end
     end
 
-    context 'when requested to add an city that the user already has' do
+    context 'when requested to add a city that the user already has' do
       before do
         put '/api/v1/user/cities/add', headers: { 'x-device-id' => user.device_id },
                                        params: { weather_id: 1, name: 'Stockholm', country: 'Sweden',
@@ -399,8 +427,6 @@ RSpec.describe 'Users' do
 
   describe 'GET QUESTIONS' do
     let(:device_id) { 'k123v23hj213321jh12kj3123k' }
-    let!(:question) { create(:question, question: 'Do you like robots?') }
-    let!(:question2) { create(:question, question: 'Do you like apples?') }
 
     before do
       create(:city, name: 'Stockholm', weather_id: 2_673_730, country: 'Sweden', latitude: 59.33459,
