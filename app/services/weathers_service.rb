@@ -47,7 +47,13 @@ class WeathersService
     end
     json_response
   end
-  # rubocop:enable Metrics/AbcSize
+
+  def retrieve_temp_cw(temp, data_json, i_values, json_response)
+    i_values.each do |i|
+      temp.append(data_json['hourly'][key.to_s][i])
+    end
+    json_response.merge({ key => temp })
+  end
 
   def current_weather(latitude, longitude, temp_unit)
     url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&hourly=relativehumidity_2m&hourly=temperature_2m&hourly=precipitation_probability&hourly=direct_radiation&hourly=apparent_temperature&current_weather=true&forecast_days=1&windspeed_unit=ms&temperature_unit=#{temp_unit}"
@@ -66,7 +72,6 @@ class WeathersService
     uri = URI(url)
     Net::HTTP.get(uri)
   end
-
 
   def cities_weather(cities_ids, temp_unit)
     cities_ids.map do |id|

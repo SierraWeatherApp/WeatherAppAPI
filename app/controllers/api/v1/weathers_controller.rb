@@ -20,12 +20,12 @@ module Api
 
       def mode(params)
         if params[:mode] == 'cw' # cw -> current_weather
-          @ws.retrieve_current_weather(params, @user.temp_units)
+          @ws.retrieve_current_weather(params, @user.temp_unit)
         elsif params[:mode] == 'tf' # tf -> time_frame
           valid_params?(%i[day])
           @ws.retrieve_time_frame(params)
         else
-          @ws.retrieve_forecast(params, @user.temp_units)
+          @ws.retrieve_forecast(params, @user.temp_unit)
         end
       end
 

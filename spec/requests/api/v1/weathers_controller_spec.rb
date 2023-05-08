@@ -29,9 +29,7 @@ RSpec.describe Api::V1::WeathersController do
     before do
       get '/api/v1/weather?latitude=52.52&longitude=13.41&temperature=true&weathercode=true
 &windspeed=true&mode=cw&apparent_temperature=true&relativehumidity_2m=true',
-          headers: { 'x-device-id' => user.device_id } # &apparent_temperature=true&relativehumidity_2m=true
-      # get '/api/v1/weather?latitude=52.52&longitude=13.41&weathercode=true&day=7&temperature_2m_max=true&mode=tf',
-      #     headers: { 'x-device-id' => user.device_id }
+          headers: { 'x-device-id' => user.device_id }
     end
 
     it 'return http success' do
