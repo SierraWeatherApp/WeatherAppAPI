@@ -73,11 +73,10 @@ module Api
       end
 
       def add
+        response = { message: nil,
+                     status_code: :created }
         begin
           @user_service.add_city(@user, @city_service.fetch_city(params))
-
-          response = { message: nil,
-                       status_code: :created }
         rescue Errors::IncorrectAddError => e
           response = { status_code: :bad_request, message: { error: e } }
         rescue StandardError => e
@@ -87,13 +86,23 @@ module Api
       end
 
       def update
+        response = { message: nil,
+                     status_code: :ok }
         begin
           @user.update!(update_params)
-
-          response = { message: nil,
-                       status_code: :ok }
         rescue StandardError => e
           response = { status_code: :bad_request, message: { error: e } }
+        end
+        render json: response[:message], status: response[:status_code]
+      end
+
+      def delete
+        response = { message: nil,
+                     status_code: :ok }
+        begin
+          @user.destroy!
+        rescue StandardError => e
+          response = { status_code: :internal_server_error, message: { error: e } }
         end
         render json: response[:message], status: response[:status_code]
       end
