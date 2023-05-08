@@ -68,6 +68,18 @@ RSpec.describe 'Users' do
       it 'returns the clothing recommendation' do
         expect(JSON.parse(response.body)['cities'][0]['recommendation']).to be_a(Array)
       end
+
+      it 'returns the user temp unit' do
+        expect(JSON.parse(response.body)['user_temp_unit']).to eq('celsius')
+      end
+
+      it 'returns the user gender' do
+        expect(JSON.parse(response.body)['gender']).to eq('female')
+      end
+
+      it 'returns the user look' do
+        expect(JSON.parse(response.body)['look']).to eq(0)
+      end
     end
 
     context 'when no user exist, creates one' do
@@ -76,6 +88,7 @@ RSpec.describe 'Users' do
       before do
         create(:city, name: 'Stockholm', weather_id: 2_673_730, country: 'Sweden', latitude: 59.33459,
                       longitude: 18.06324)
+        create(:cloth_type, name: 'charizard', section: 'pokemon')
         VCR.use_cassette('userNewInfo_index') do
           get '/api/v1/user', headers: { 'x-device-id' => device_id }
         end
@@ -98,6 +111,10 @@ RSpec.describe 'Users' do
 
       it 'returns the main city' do
         expect(JSON.parse(response.body)['cities'][0]['weather_id']).to eq(2_673_730)
+      end
+
+      it 'returns the user cloth preferences' do
+        expect(JSON.parse(response.body)['preferences']['charizard']).to eq(0)
       end
     end
 
@@ -471,6 +488,37 @@ RSpec.describe 'Users' do
 
       it 'returns nil when modifies more than one question correctly' do
         expect(User.first.answers[question2.id.to_s]).to eq(1)
+      end
+    end
+  end
+
+  describe 'MODIFY PREFERENCES' do
+    let(:device_id) { 'k123v23hj213321jh12kj3123k' }
+    let(:cloth_one) { create(:cloth_type) }
+    let(:cloth_two) { create(:cloth_type) }
+
+    before do
+      create(:city, name: 'Stockholm', weather_id: 2_673_730, country: 'Sweden', latitude: 59.33459,
+                    longitude: 18.06324)
+    end
+
+    context 'when modified questions' do
+      before do
+        patch '/api/v1/user/cloth/change_cloth', headers: { 'x-device-id' => device_id },
+                                                 params: { preferences: { "#{cloth_one.name}": 1,
+                                                                          "#{cloth_two.name}": 1 } }
+      end
+
+      it 'returns ok request status' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'returns ok when modifies question successfully' do
+        expect(User.first.preferences[cloth_one.name]).to eq(1)
+      end
+
+      it 'returns nil when modifies more than one question correctly' do
+        expect(User.first.preferences[cloth_two.name]).to eq(1)
       end
     end
   end
