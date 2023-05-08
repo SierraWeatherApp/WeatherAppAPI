@@ -5,7 +5,7 @@ class QuestionsService
   end
 
   def question_response_message(answers, question)
-    { question: question.question, answer: answers[question.id.to_s], question_id: question.id, max: question.max,
+    { question: question.question, answer: answers[question.label], question_id: question.id, max: question.max,
       min: question.min }
   end
 

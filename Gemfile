@@ -63,8 +63,8 @@ group :development, :test do
 end
 
 group :test do
-  # gem 'webmock'
-  # gem "vcr", github: "vcr/vcr"
+  gem 'vcr', github: 'vcr/vcr'
+  gem 'webmock'
 end
 
 group :development do
