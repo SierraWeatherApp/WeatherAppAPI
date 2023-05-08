@@ -21,4 +21,3 @@ RSpec.describe ClothType do
     expect(described_class.new(name: 'shirt_hoodie', section: 'shirt')).not_to be_valid
   end
 end
-

@@ -471,7 +471,8 @@ RSpec.describe 'Users' do
     context 'when modified questions' do
       before do
         patch '/api/v1/user/cloth/change_cloth', headers: { 'x-device-id' => device_id },
-                                                 params: { preferences: { "#{cloth_one.name}": 1, "#{cloth_two.name}": 1 } }
+                                                 params: { preferences: { "#{cloth_one.name}": 1,
+                                                                          "#{cloth_two.name}": 1 } }
       end
 
       it 'returns ok request status' do

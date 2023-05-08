@@ -4,4 +4,3 @@ FactoryBot.define do
     section { 't_shirt' }
   end
 end
-
