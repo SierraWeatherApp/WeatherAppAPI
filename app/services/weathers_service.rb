@@ -40,15 +40,12 @@ class WeathersService
       temp = []
       next unless params.key?(key) && params[key.to_s] == 'true'
 
-      i_values.each do |i|
-        temp.append(data_json['hourly'][key.to_s][i])
-      end
-      json_response = json_response.merge({ key => temp })
+      json_response = retrieve_temp_cw(temp, data_json, i_values, json_response, key)
     end
     json_response
   end
 
-  def retrieve_temp_cw(temp, data_json, i_values, json_response)
+  def retrieve_temp_cw(temp, data_json, i_values, json_response, key)
     i_values.each do |i|
       temp.append(data_json['hourly'][key.to_s][i])
     end
