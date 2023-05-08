@@ -10,17 +10,23 @@ module Api
         response = { status: :ok, message: nil }
         begin
           valid_params?(%i[latitude longitude mode])
-          if params[:mode] == 'cw' # cw -> current_weather
-            jsonresponse = @ws.retrieve_current_weather(params, @user.temp_unit)
-          elsif params[:mode] == 'tf' # tf -> time_frame
-            valid_params?(%i[day])
-            jsonresponse = @ws.retrieve_time_frame(params)
-          end
+          json_response = mode(params)
         rescue StandardError => e
           response = { status: :internal_server_error, message: e }
         end
-        response[:message] = jsonresponse
+        response[:message] = json_response
         render json: response[:message], status: response[:status]
+      end
+
+      def mode(params)
+        if params[:mode] == 'cw' # cw -> current_weather
+          @ws.retrieve_current_weather(params, @user.temp_unit)
+        elsif params[:mode] == 'tf' # tf -> time_frame
+          valid_params?(%i[day])
+          @ws.retrieve_time_frame(params)
+        else
+          @ws.retrieve_forecast(params, @user.temp_unit)
+        end
       end
 
       private
