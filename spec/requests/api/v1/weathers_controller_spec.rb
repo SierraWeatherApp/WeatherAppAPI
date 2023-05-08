@@ -8,8 +8,10 @@ RSpec.describe Api::V1::WeathersController do
 
   context 'when 24 Hour Forecast' do
     before do
-      get '/api/v1/weather?latitude=52.52&longitude=13.41&weathercode=true&mode=fc&temperature_2m=true',
-          headers: { 'x-device-id' => user.device_id }
+      VCR.use_cassette('weatherDayForecast') do
+        get '/api/v1/weather?latitude=52.52&longitude=13.41&weathercode=true&mode=fc&temperature_2m=true',
+            headers: { 'x-device-id' => user.device_id }
+      end
     end
 
     it 'return http success' do
@@ -27,9 +29,11 @@ RSpec.describe Api::V1::WeathersController do
 
   context 'when Current Weather' do
     before do
-      get '/api/v1/weather?latitude=52.52&longitude=13.41&temperature=true&weathercode=true
+      VCR.use_cassette('weatherCurrentForecast_index') do
+        get '/api/v1/weather?latitude=52.52&longitude=13.41&temperature=true&weathercode=true
 &windspeed=true&mode=cw&apparent_temperature=true&relativehumidity_2m=true',
-          headers: { 'x-device-id' => user.device_id }
+            headers: { 'x-device-id' => user.device_id }
+      end
     end
 
     it 'return http success' do
@@ -59,9 +63,11 @@ RSpec.describe Api::V1::WeathersController do
 
   context 'when Temperature Time Frame' do
     before do
-      get '/api/v1/weather?latitude=52.52&longitude=13.41&temperature=true&weathercode=true&day=7
+      VCR.use_cassette('temperatureTimeFrame_index') do
+        get '/api/v1/weather?latitude=52.52&longitude=13.41&temperature=true&weathercode=true&day=7
 &temperature_2m_max=true&temperature_2m_min=true&mode=tf',
-          headers: { 'x-device-id' => user.device_id }
+            headers: { 'x-device-id' => user.device_id }
+      end
     end
 
     it 'return http success' do

@@ -31,7 +31,7 @@ class ApplicationController < ActionController::API
     answers = {}
     preferences = {}
     questions.each do |question|
-      answers = answers.merge({ question.id.to_s => 0 })
+      answers = answers.merge({ question.label => 0 })
     end
     cloth_types.each do |type|
       preferences = preferences.merge({ type.name => 0 })

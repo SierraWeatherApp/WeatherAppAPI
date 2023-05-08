@@ -1,7 +1,11 @@
 class Question < ApplicationRecord
   validates_presence_of :question
   validates_uniqueness_of :question
+  validates_presence_of :label
+  validates_uniqueness_of :label
   validate :min_max_relation, :zero_included
+
+  enum :label, %i[sandalUser shortUser capUser userPlace userTemp]
 
   private
 

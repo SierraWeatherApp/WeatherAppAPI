@@ -64,25 +64,36 @@ class WeathersService
     Net::HTTP.get(uri)
   end
 
+  def retrieve_cloths_recommendation(weather_params, user_answers)
+    JSON.parse(cloths_communication(weather_params, user_answers))
+  end
+
+  def cloths_communication(weather_params, user_answers)
+    url = "http://130.229.151.193:4444/rec?inputs=#{weather_params[:apparent_temperature]}&inputs=#{weather_params[:temperature]}&inputs=#{weather_params[:relativehumidity_2m]}&inputs=#{weather_params[:windspeed]}&inputs=#{weather_params[:precipitation_probability]}&inputs=#{weather_params[:direct_radiation]}&inputs=#{user_answers['sandalUser']}&inputs=#{user_answers['shortUser']}&inputs=#{user_answers['capUser']}&inputs=#{user_answers['userPlace']}&inputs=#{user_answers['userTemp']}"
+    uri = URI(url)
+    Net::HTTP.get(uri)
+  end
+
   def forecast(latitude, longitude, temp_units)
     url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&time&hourly=weathercode&hourly=temperature_2m&timezone=GMT&temperature_unit=#{temp_units}"
     uri = URI(url)
     Net::HTTP.get(uri)
   end
 
-  def cities_weather(cities_ids, temp_unit)
+  def cities_weather(cities_ids, temp_unit, user_answers)
     cities_ids.map do |id|
-      city_response_message(id, temp_unit)
+      city_response_message(id, temp_unit, user_answers)
     end
   end
 
-  def city_response_message(id, temp_unit)
+  def city_response_message(id, temp_unit, user_answers)
     city = City.find(id)
     params = { longitude: city.longitude, latitude: city.latitude }
     city_weather = retrieve_current_weather(params, temp_unit)
+    cloths_recommendation = retrieve_cloths_recommendation(city_weather, user_answers)
     {
       id: city.id, weather_id: city.weather_id, weather: city_weather, city_name: city.name,
-      longitude: city.longitude, latitude: city.latitude
+      longitude: city.longitude, latitude: city.latitude, recommendation: cloths_recommendation
     }
   end
 end
