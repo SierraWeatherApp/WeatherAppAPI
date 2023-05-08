@@ -40,61 +40,27 @@ RSpec.describe 'Users' do
       it 'returns the apparent temperature' do
         expect(JSON.parse(response.body)['cities'][0]['weather']['apparent_temperature']).to be_a(Float)
       end
-    end
 
-    describe 'updating user info' do
-      let(:device_id) { 'k123v23hj213321jh12kj3123k' }
-      let(:city_st) do
-        create(:city, name: 'Stockholm', weather_id: 2_673_730, country: 'Sweden', latitude: 59.33459,
-                      longitude: 18.06324)
-      end
-      let(:city_bs) do
-        create(:city, name: 'Buenos Aires', weather_id: 3_435_910, country: 'Argentina', latitude: -34.61315,
-                      longitude: -58.37723)
+      it 'returns the precipitation probability' do
+        expect(JSON.parse(response.body)['cities'][0]['weather']['precipitation_probability']).to be_a(Integer)
       end
 
-      # @todo move to new description: updating info
-      # @todo create test for giving info to an already existing user
-      context 'when requested to update temperature units' do
-        before do
-          create(:user, device_id:, cities_ids: [city_bs.id, city_st.id])
-          patch '/api/v1/user?temp_unit=fahrenheit',
-                headers: { 'x-device-id' => device_id }
-        end
-
-        it 'returns success request status' do
-          expect(response).to have_http_status(:ok)
-        end
-
-        it 'saves information' do
-          user = User.find_by(device_id:)
-          expect(user.reload.temp_units).to eq('fahrenheit')
-        end
+      it 'returns the direct radiation' do
+        expect(JSON.parse(response.body)['cities'][0]['weather']['direct_radiation']).to be_a(Float)
       end
 
-      context 'when requested to update temperature units with incorrect parameters' do
-        before do
-          create(:user, device_id:, cities_ids: [city_bs.id, city_st.id])
-          patch '/api/v1/user?temp_unit=car',
-                headers: { 'x-device-id' => device_id }
-        end
-
-        it 'returns bad request status' do
-          expect(response).to have_http_status(:bad_request)
-        end
-
-        it 'returns a specified error message' do
-          expect(JSON.parse(response.body)['error']).to eq('Validation failed: Temp units incorrect_temp_format')
-        end
+      it 'returns the user temp unit' do
+        expect(JSON.parse(response.body)['user_temp_unit']).to eq('celsius')
       end
     end
 
-    context 'when the user does not exist' do
+    context 'when no user exist, creates one' do
       let(:device_id) { 'k123v23hj213321jh12kj3123k' }
 
       before do
         create(:city, name: 'Stockholm', weather_id: 2_673_730, country: 'Sweden', latitude: 59.33459,
                       longitude: 18.06324)
+        create(:cloth_type, name: 'charizard', section: 'pokemon')
         get '/api/v1/user', headers: { 'x-device-id' => device_id }
       end
 
@@ -102,7 +68,7 @@ RSpec.describe 'Users' do
         expect(response).to have_http_status(:ok)
       end
 
-      it 'creates a user' do
+      it 'creates user' do
         user = User.find_by(device_id:)
         expect(user.device_id).to eq(device_id)
       end
@@ -110,15 +76,173 @@ RSpec.describe 'Users' do
       it 'returns the main city' do
         expect(JSON.parse(response.body)['cities'][0]['weather_id']).to eq(2_673_730)
       end
+
+      it 'returns the user cloth preferences' do
+        expect(JSON.parse(response.body)['preferences']['charizard']).to eq(0)
+      end
     end
 
-    context 'when the device_id is not sent' do
+    context 'when device_id is not sent' do
       before do
         get '/api/v1/user'
       end
 
       it 'returns internal server error status' do
         expect(response).to have_http_status(:internal_server_error)
+      end
+    end
+  end
+
+  describe 'updating user info' do
+    let(:device_id) { 'k123v23hj213321jh12kj3123k' }
+    let(:city_st) do
+      create(:city, name: 'Stockholm', weather_id: 2_673_730, country: 'Sweden', latitude: 59.33459,
+                    longitude: 18.06324)
+    end
+    let(:city_bs) do
+      create(:city, name: 'Buenos Aires', weather_id: 3_435_910, country: 'Argentina', latitude: -34.61315,
+                    longitude: -58.37723)
+    end
+
+    before do
+      create(:user, device_id:, cities_ids: [city_bs.id, city_st.id])
+    end
+
+    context 'when requested to update temperature unit' do
+      before do
+        patch '/api/v1/user?temp_unit=fahrenheit',
+              headers: { 'x-device-id' => device_id }
+      end
+
+      it 'returns success request status' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'saves information' do
+        user = User.find_by(device_id:)
+        expect(user.reload.temp_unit).to eq('fahrenheit')
+      end
+
+      it 'does not change gender' do
+        user = User.find_by(device_id:)
+        expect(user.reload.gender).to eq('female')
+      end
+
+      it 'does not change look' do
+        user = User.find_by(device_id:)
+        expect(user.reload.look).to eq(0)
+      end
+    end
+
+    context 'when requested to update temp_unit with incorrect data format' do
+      before do
+        patch '/api/v1/user?temp_unit=car',
+              headers: { 'x-device-id' => device_id }
+      end
+
+      it 'returns bad request status' do
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'gives incorrect_temp_format error message' do
+        expect(JSON.parse(response.body)['error']).to eq('Validation failed: Temp unit incorrect_temp_format')
+      end
+    end
+
+    context 'when requested to update gender' do
+      before do
+        patch '/api/v1/user?gender=male',
+              headers: { 'x-device-id' => device_id }
+      end
+
+      it 'returns success request status' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'saves information' do
+        user = User.find_by(device_id:)
+        expect(user.reload.gender).to eq('male')
+      end
+
+      it 'does not change temperature' do
+        user = User.find_by(device_id:)
+        expect(user.reload.temp_unit).to eq('celsius')
+      end
+
+      it 'does not change look' do
+        user = User.find_by(device_id:)
+        expect(user.reload.look).to eq(0)
+      end
+    end
+
+    context 'when requested to update gender with incorrect data format' do
+      before do
+        patch '/api/v1/user?gender=gender',
+              headers: { 'x-device-id' => device_id }
+      end
+
+      it 'returns bad request status' do
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'gives incorrect_gender_format error message' do
+        expect(JSON.parse(response.body)['error']).to eq('Validation failed: Gender incorrect_gender_format')
+      end
+    end
+
+    context 'when requested to update look' do
+      before do
+        patch '/api/v1/user?look=9',
+              headers: { 'x-device-id' => device_id }
+      end
+
+      it 'returns success request status' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'saves information' do
+        user = User.find_by(device_id:)
+        expect(user.reload.look).to eq(9)
+      end
+
+      it 'does not change temperature' do
+        user = User.find_by(device_id:)
+        expect(user.reload.temp_unit).to eq('celsius')
+      end
+
+      it 'does not change gender' do
+        user = User.find_by(device_id:)
+        expect(user.reload.gender).to eq('female')
+      end
+    end
+
+    context 'when requested to update look with incorrect data format (not an integer)' do
+      before do
+        patch '/api/v1/user?look=h',
+              headers: { 'x-device-id' => device_id }
+      end
+
+      it 'returns bad request status' do
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'gives incorrect_look_format error message' do
+        expect(JSON.parse(response.body)['error']).to eq('Validation failed: Look is not a number')
+      end
+    end
+
+    context 'when requested to update look with incorrect data format (number smaller than zero)' do
+      before do
+        patch '/api/v1/user?look=-1',
+              headers: { 'x-device-id' => device_id }
+      end
+
+      it 'returns bad request status' do
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'gives incorrect_look_format error message' do
+        expect(JSON.parse(response.body)['error']).to eq('Validation failed: Look must be greater than or equal to 0')
       end
 
       # @todo check whether specified error message is sent
@@ -278,6 +402,89 @@ RSpec.describe 'Users' do
 
       it 'returns a specified error message' do
         expect(JSON.parse(response.body)['error']).to eq('the city is already added')
+      end
+    end
+  end
+
+  describe 'GET QUESTIONS' do
+    let(:device_id) { 'k123v23hj213321jh12kj3123k' }
+    let!(:question) { create(:question, question: 'Do you like robots?') }
+    let!(:question2) { create(:question, question: 'Do you like apples?') }
+
+    before do
+      create(:city, name: 'Stockholm', weather_id: 2_673_730, country: 'Sweden', latitude: 59.33459,
+                    longitude: 18.06324)
+    end
+
+    context 'when requested questions' do
+      before do
+        get '/api/v1/user/questions/all', headers: { 'x-device-id' => device_id }
+      end
+
+      it 'returns ok request status' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'returns question 1 with correct id' do
+        expect(JSON.parse(response.body)['questions'][0]['question_id']).to eq(question.id)
+      end
+
+      it 'returns question 2 with correct id' do
+        expect(JSON.parse(response.body)['questions'][1]['question_id']).to eq(question2.id)
+      end
+
+      it 'returns question 2 with answer 0' do
+        expect(JSON.parse(response.body)['questions'][1]['answer']).to eq(0)
+      end
+    end
+
+    context 'when modified questions' do
+      before do
+        patch '/api/v1/user/questions/answer', headers: { 'x-device-id' => device_id },
+                                               params: { questions: { "#{question.id}": 1, "#{question2.id}": 1 } }
+      end
+
+      it 'returns ok request status' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'returns ok when modifies question successfully' do
+        expect(User.first.answers[question.id.to_s]).to eq(1)
+      end
+
+      it 'returns nil when modifies more than one question correctly' do
+        expect(User.first.answers[question2.id.to_s]).to eq(1)
+      end
+    end
+  end
+
+  describe 'MODIFY PREFERENCES' do
+    let(:device_id) { 'k123v23hj213321jh12kj3123k' }
+    let(:cloth_one) { create(:cloth_type) }
+    let(:cloth_two) { create(:cloth_type) }
+
+    before do
+      create(:city, name: 'Stockholm', weather_id: 2_673_730, country: 'Sweden', latitude: 59.33459,
+                    longitude: 18.06324)
+    end
+
+    context 'when modified questions' do
+      before do
+        patch '/api/v1/user/cloth/change_cloth', headers: { 'x-device-id' => device_id },
+                                                 params: { preferences: { "#{cloth_one.name}": 1,
+                                                                          "#{cloth_two.name}": 1 } }
+      end
+
+      it 'returns ok request status' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'returns ok when modifies question successfully' do
+        expect(User.first.preferences[cloth_one.name]).to eq(1)
+      end
+
+      it 'returns nil when modifies more than one question correctly' do
+        expect(User.first.preferences[cloth_two.name]).to eq(1)
       end
     end
   end

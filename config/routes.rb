@@ -11,10 +11,17 @@ Rails.application.routes.draw do
       patch '/user' => 'users#update'
       resources :cities, only: %i[show]
       scope :user do
+        scope :questions do
+          get 'all' => 'users#all'
+          patch 'answer' => 'users#answers'
+        end
         scope :cities do
           patch '/destroy' => 'users#destroy'
           patch '/change_order' => 'users#order'
           put '/add' => 'users#add'
+        end
+        scope :cloth do
+          patch 'change_cloth' => 'users#cloth'
         end
       end
     end

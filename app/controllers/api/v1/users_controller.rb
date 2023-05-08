@@ -6,12 +6,42 @@ module Api
         response = { message: nil, status: :ok }
         begin
           response[:message] =
-            { user_temp_unit: @user.temp_units,
-              cities: @weather_service.cities_weather(@user.cities_ids, weather_params, @user.temp_units) }
+            { user_temp_unit: @user.temp_unit, preferences: @user.preferences,
+              cities: @weather_service.cities_weather(@user.cities_ids, @user.temp_unit) }
         rescue StandardError => e
           response = { message: e, status: :internal_server_error }
         end
         render json: response[:message], status: response[:status]
+      end
+
+      def all
+        response = { status_code: :ok, message: nil }
+        begin
+          response[:message] = { questions: @question_service.questions_answers(@user) }
+        rescue StandardError => e
+          response = { status_code: :internal_server_error, message: { error: e } }
+        end
+        render json: response[:message], status: response[:status_code]
+      end
+
+      def cloth
+        response = { status_code: :ok, message: nil }
+        begin
+          response[:message] = { questions: @cloth_service.change_cloth_preference(@user, params[:preferences]) }
+        rescue StandardError => e
+          response = { status_code: :internal_server_error, message: { error: e } }
+        end
+        render json: response[:message], status: response[:status_code]
+      end
+
+      def answers
+        response = { status_code: :ok, message: nil }
+        begin
+          @question_service.modify_answers(@user, params[:questions])
+        rescue StandardError => e
+          response = { status_code: :internal_server_error, message: { error: e } }
+        end
+        render json: response[:message], status: response[:status_code]
       end
 
       def destroy
@@ -58,7 +88,7 @@ module Api
 
       def update
         begin
-          @user.update!(temp_units: update_params[:temp_unit])
+          @user.update!(update_params)
 
           response = { message: nil,
                        status_code: :ok }
@@ -71,12 +101,7 @@ module Api
       private
 
       def update_params
-        params.permit(:temp_unit)
-      end
-
-      def weather_params
-        params.permit(:temperature, :weathercode, :windspeed, :is_day, :mode, :relativehumidity_2m,
-                      :apparent_temperature)
+        params.permit(:temp_unit, :gender, :look)
       end
 
       def permitted_params
@@ -87,6 +112,8 @@ module Api
         @user_service = UsersService.new
         @city_service = CitiesService.new
         @weather_service = WeathersService.new
+        @question_service = QuestionsService.new
+        @cloth_service = ClothTypesService.new
       end
     end
   end

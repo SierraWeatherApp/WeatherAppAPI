@@ -10,8 +10,7 @@ class ApplicationController < ActionController::API
     @user = User.find_by(device_id: @device_id)
     return unless @user.blank?
 
-    city = City.find_by(weather_id: 2_673_730)
-    @user = User.create!(device_id: @device_id, cities_ids: [city.id])
+    create_user
   rescue StandardError => e
     response = { message: e, status: :internal_server_error }
     render json: response[:message], status: response[:status]
@@ -23,5 +22,20 @@ class ApplicationController < ActionController::API
     parameters.each do |param|
       raise Errors::MissingArgumentError, param unless params[param]
     end
+  end
+
+  def create_user
+    city = City.find_by(weather_id: 2_673_730)
+    questions = Question.all
+    cloth_types = ClothType.all
+    answers = {}
+    preferences = {}
+    questions.each do |question|
+      answers = answers.merge({ question.id.to_s => 0 })
+    end
+    cloth_types.each do |type|
+      preferences = preferences.merge({ type.name => 0 })
+    end
+    @user = User.create!(device_id: @device_id, cities_ids: [city.id], answers:, preferences:)
   end
 end
