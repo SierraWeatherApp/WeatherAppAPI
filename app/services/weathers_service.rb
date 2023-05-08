@@ -28,6 +28,30 @@ class WeathersService
     json_response
   end
 
+  def retrieve_forecast(params, temp_units)
+    json_response = {}
+    data_json = JSON.parse(forecast(params[:latitude], params[:longitude], temp_units))
+    i_values = []
+    (Time.now.hour..(Time.now.hour + 23)).each do |i|
+      i_values << i
+    end
+    keys = %i[temperature_2m weathercode]
+    keys.each do |key|
+      temp = []
+      next unless params.key?(key) && params[key.to_s] == 'true'
+
+      json_response = retrieve_temp_cw(temp, data_json, i_values, json_response, key)
+    end
+    json_response
+  end
+
+  def retrieve_temp_cw(temp, data_json, i_values, json_response, key)
+    i_values.each do |i|
+      temp.append(data_json['hourly'][key.to_s][i])
+    end
+    json_response.merge({ key => temp })
+  end
+
   def current_weather(latitude, longitude, temp_unit)
     url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&hourly=relativehumidity_2m&hourly=temperature_2m&hourly=precipitation_probability&hourly=direct_radiation&hourly=apparent_temperature&current_weather=true&forecast_days=1&windspeed_unit=ms&temperature_unit=#{temp_unit}"
     uri = URI(url)
@@ -46,6 +70,12 @@ class WeathersService
 
   def cloths_communication(weather_params, user_answers)
     url = "http://130.229.151.193:4444/rec?inputs=#{weather_params[:apparent_temperature]}&inputs=#{weather_params[:temperature]}&inputs=#{weather_params[:relativehumidity_2m]}&inputs=#{weather_params[:windspeed]}&inputs=#{weather_params[:precipitation_probability]}&inputs=#{weather_params[:direct_radiation]}&inputs=#{user_answers['sandalUser']}&inputs=#{user_answers['shortUser']}&inputs=#{user_answers['capUser']}&inputs=#{user_answers['userPlace']}&inputs=#{user_answers['userTemp']}"
+    uri = URI(url)
+    Net::HTTP.get(uri)
+  end
+
+  def forecast(latitude, longitude, temp_units)
+    url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&time&hourly=weathercode&hourly=temperature_2m&timezone=GMT&temperature_unit=#{temp_units}"
     uri = URI(url)
     Net::HTTP.get(uri)
   end
