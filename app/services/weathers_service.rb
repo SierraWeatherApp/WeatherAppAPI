@@ -32,6 +32,26 @@ class WeathersService
     end
     json_response
   end
+
+  def retrieve_forecast(params, temp_units)
+    json_response = {}
+    data_json = JSON.parse(forecast(params[:latitude], params[:longitude], temp_units))
+    i_values = []
+    (Time.now.hour..(Time.now.hour + 23)).each do |i|
+      i_values << i
+    end
+    keys = %i[temperature_2m weathercode]
+    keys.each do |key|
+      temp = []
+      next unless params.key?(key) && params[key.to_s] == 'true'
+
+      i_values.each do |i|
+        temp.append(data_json['hourly'][key.to_s][i])
+      end
+      json_response = json_response.merge({ key => temp })
+    end
+    json_response
+  end
   # rubocop:enable Metrics/AbcSize
 
   def current_weather(latitude, longitude, temp_units)
@@ -42,6 +62,12 @@ class WeathersService
 
   def weather_time_frame(latitude, longitude, day = 1)
     url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&time&daily=temperature_2m_max&daily=temperature_2m_min&forecast_days=#{day}&daily=weathercode&timezone=GMT"
+    uri = URI(url)
+    Net::HTTP.get(uri)
+  end
+
+  def forecast(latitude, longitude, temp_units)
+    url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&time&hourly=weathercode&hourly=temperature_2m&timezone=GMT&temperature_unit=#{temp_units}"
     uri = URI(url)
     Net::HTTP.get(uri)
   end
