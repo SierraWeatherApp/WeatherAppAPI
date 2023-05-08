@@ -437,6 +437,14 @@ RSpec.describe 'Users' do
         expect(JSON.parse(response.body)['questions'][0]['question_id']).to eq(question.id)
       end
 
+      it 'returns question 1 max possible response' do
+        expect(JSON.parse(response.body)['questions'][0]['max']).to eq(1)
+      end
+
+      it 'returns question 1 min possible response' do
+        expect(JSON.parse(response.body)['questions'][0]['min']).to eq(0)
+      end
+
       it 'returns question 2 with correct id' do
         expect(JSON.parse(response.body)['questions'][1]['question_id']).to eq(question2.id)
       end
