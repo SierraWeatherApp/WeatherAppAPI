@@ -15,8 +15,10 @@ RSpec.describe 'Cities' do
       create(:question, question: 'Do you wear sandals at all?', label: :capUser)
       create(:question, question: 'Are you warmer or colder dressed than the people around you?', label: :userPlace)
       create(:question, question: 'Do you live in a hot or cold place?', label: :userTemp)
-      get "/api/v1/cities/#{city.id}?temperature=true&weathercode=true&windspeed=true&is_day=true",
-          headers: { 'x-device-id' => user.device_id }
+      VCR.use_cassette('citiesInfo_index') do
+        get "/api/v1/cities/#{city.id}?temperature=true&weathercode=true&windspeed=true&is_day=true",
+            headers: { 'x-device-id' => user.device_id }
+      end
     end
 
     it 'returns an ok status' do
