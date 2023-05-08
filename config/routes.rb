@@ -20,6 +20,9 @@ Rails.application.routes.draw do
           patch '/change_order' => 'users#order'
           put '/add' => 'users#add'
         end
+        scope :cloth do
+          patch 'change_cloth' => 'users#cloth'
+        end
       end
     end
   end

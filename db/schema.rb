@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_230_503_070_952) do
+ActiveRecord::Schema[7.0].define(version: 20_230_508_071_112) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -20,6 +20,13 @@ ActiveRecord::Schema[7.0].define(version: 20_230_503_070_952) do
     t.string 'country'
     t.float 'latitude'
     t.float 'longitude'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+  end
+
+  create_table 'cloth_types', force: :cascade do |t|
+    t.string 'name'
+    t.string 'section'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
   end
@@ -39,7 +46,9 @@ ActiveRecord::Schema[7.0].define(version: 20_230_503_070_952) do
     t.integer 'look', default: 0
     t.integer 'cities_ids', default: [], array: true
     t.json 'answers', default: {}
+    t.json 'preferences', default: {}
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
   end
+
 end
