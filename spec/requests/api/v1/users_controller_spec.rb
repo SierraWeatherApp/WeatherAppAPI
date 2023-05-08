@@ -52,6 +52,14 @@ RSpec.describe 'Users' do
       it 'returns the user temp unit' do
         expect(JSON.parse(response.body)['user_temp_unit']).to eq('celsius')
       end
+
+      it 'returns the user gender' do
+        expect(JSON.parse(response.body)['gender']).to eq('female')
+      end
+
+      it 'returns the user look' do
+        expect(JSON.parse(response.body)['look']).to eq(0)
+      end
     end
 
     context 'when no user exist, creates one' do

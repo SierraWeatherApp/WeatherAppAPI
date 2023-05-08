@@ -6,7 +6,7 @@ module Api
         response = { message: nil, status: :ok }
         begin
           response[:message] =
-            { user_temp_unit: @user.temp_unit, preferences: @user.preferences,
+            { user_temp_unit: @user.temp_unit, preferences: @user.preferences, gender: @user.gender, look: @user.look,
               cities: @weather_service.cities_weather(@user.cities_ids, @user.temp_unit) }
         rescue StandardError => e
           response = { message: e, status: :internal_server_error }
