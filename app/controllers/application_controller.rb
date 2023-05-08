@@ -27,10 +27,15 @@ class ApplicationController < ActionController::API
   def create_user
     city = City.find_by(weather_id: 2_673_730)
     questions = Question.all
+    cloth_types = ClothType.all
     answers = {}
+    preferences = {}
     questions.each do |question|
       answers = answers.merge({ question.id.to_s => 0 })
     end
-    @user = User.create!(device_id: @device_id, cities_ids: [city.id], answers:)
+    cloth_types.each do |type|
+      preferences = preferences.merge({ type.name => 0 })
+    end
+    @user = User.create!(device_id: @device_id, cities_ids: [city.id], answers:, preferences:)
   end
 end

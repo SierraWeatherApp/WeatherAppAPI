@@ -6,7 +6,7 @@ module Api
         response = { message: nil, status: :ok }
         begin
           response[:message] =
-            { user_temp_unit: @user.temp_unit,
+            { user_temp_unit: @user.temp_unit, preferences: @user.preferences,
               cities: @weather_service.cities_weather(@user.cities_ids, @user.temp_unit) }
         rescue StandardError => e
           response = { message: e, status: :internal_server_error }
@@ -18,6 +18,16 @@ module Api
         response = { status_code: :ok, message: nil }
         begin
           response[:message] = { questions: @question_service.questions_answers(@user) }
+        rescue StandardError => e
+          response = { status_code: :internal_server_error, message: { error: e } }
+        end
+        render json: response[:message], status: response[:status_code]
+      end
+
+      def cloth
+        response = { status_code: :ok, message: nil }
+        begin
+          response[:message] = { questions: @cloth_service.change_cloth_preference(@user, params[:preferences]) }
         rescue StandardError => e
           response = { status_code: :internal_server_error, message: { error: e } }
         end
@@ -103,6 +113,7 @@ module Api
         @city_service = CitiesService.new
         @weather_service = WeathersService.new
         @question_service = QuestionsService.new
+        @cloth_service = ClothTypesService.new
       end
     end
   end
