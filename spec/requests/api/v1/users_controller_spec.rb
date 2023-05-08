@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Users' do
-
   let!(:question) { create(:question, question: 'Do you like to wear caps?', label: :sandalUser) }
   let!(:question2) { create(:question, question: 'Do you wear shorts at all?', label: :shortUser) }
 
