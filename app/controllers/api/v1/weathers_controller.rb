@@ -1,10 +1,7 @@
 module Api
   module V1
     class WeathersController < ApplicationController
-      def initialize
-        super
-        initialize_services
-      end
+      before_action :initialize_services
 
       def weather_info
         response = { status: :ok, message: nil }

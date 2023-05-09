@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       get '/weather' => 'weathers#weather_info'
       get '/user' => 'users#info'
       patch '/user' => 'users#update'
+      delete '/user' => 'users#delete'
       resources :cities, only: %i[show]
       scope :user do
         scope :questions do
