@@ -459,7 +459,7 @@ RSpec.describe 'Users' do
       end
 
       it 'returns question 1 with correct id' do
-        expect(JSON.parse(response.body)['questions'][0]['question_id']).to eq(question.id)
+        expect(JSON.parse(response.body)['questions'][0]['question_label']).to eq(question.label)
       end
 
       it 'returns question 1 max possible response' do
@@ -471,7 +471,7 @@ RSpec.describe 'Users' do
       end
 
       it 'returns question 2 with correct id' do
-        expect(JSON.parse(response.body)['questions'][1]['question_id']).to eq(question2.id)
+        expect(JSON.parse(response.body)['questions'][1]['question_label']).to eq(question2.label)
       end
 
       it 'returns question 2 with answer 0' do
@@ -482,7 +482,8 @@ RSpec.describe 'Users' do
     context 'when modified questions' do
       before do
         patch '/api/v1/user/questions/answer', headers: { 'x-device-id' => device_id },
-                                               params: { questions: { "#{question.id}": 1, "#{question2.id}": 1 } }
+                                               params: { questions: { "#{question.label}": 1,
+                                                                      "#{question2.label}": 1 } }
       end
 
       it 'returns ok request status' do
@@ -490,11 +491,11 @@ RSpec.describe 'Users' do
       end
 
       it 'returns ok when modifies question successfully' do
-        expect(User.first.answers[question.id.to_s]).to eq(1)
+        expect(User.first.answers[question.label.to_s]).to eq(1)
       end
 
       it 'returns nil when modifies more than one question correctly' do
-        expect(User.first.answers[question2.id.to_s]).to eq(1)
+        expect(User.first.answers[question2.label.to_s]).to eq(1)
       end
     end
   end
