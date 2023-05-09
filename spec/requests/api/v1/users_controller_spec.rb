@@ -534,11 +534,11 @@ RSpec.describe 'Users' do
     let(:device_id) { 'k123v23hj213321jh12kj3123k' }
     let!(:city_st) do
       create(:city, name: 'Stockholm', weather_id: 2_673_730, country: 'Sweden', latitude: 59.33459,
-             longitude: 18.06324)
+                    longitude: 18.06324)
     end
     let!(:city_bs) do
       create(:city, name: 'Buenos Aires', weather_id: 3_435_910, country: 'Argentina', latitude: -34.61315,
-             longitude: -58.37723)
+                    longitude: -58.37723)
     end
 
     context 'when user exists' do
