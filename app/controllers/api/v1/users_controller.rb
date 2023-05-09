@@ -73,8 +73,7 @@ module Api
       end
 
       def add
-        response = { message: nil,
-                     status_code: :created }
+        response = { message: nil, status_code: :created }
         begin
           @user_service.add_city(@user, @city_service.fetch_city(params))
         rescue Errors::IncorrectAddError => e
@@ -86,8 +85,7 @@ module Api
       end
 
       def update
-        response = { message: nil,
-                     status_code: :ok }
+        response = { message: nil, status_code: :ok }
         begin
           @user.update!(update_params)
         rescue StandardError => e
