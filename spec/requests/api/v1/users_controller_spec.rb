@@ -535,11 +535,11 @@ RSpec.describe 'Users' do
       let(:device_id) { 'k123v23hj213321jh12kj3123k' }
       let(:city_st) do
         create(:city, name: 'Stockholm', weather_id: 2_673_730, country: 'Sweden', latitude: 59.33459,
-               longitude: 18.06324)
+                      longitude: 18.06324)
       end
       let(:city_bs) do
         create(:city, name: 'Buenos Aires', weather_id: 3_435_910, country: 'Argentina', latitude: -34.61315,
-               longitude: -58.37723)
+                      longitude: -58.37723)
       end
 
       before do
@@ -553,12 +553,17 @@ RSpec.describe 'Users' do
       end
 
       it 'deletes the user' do
-        expect(User.find_by(device_id:)).to eq(nil)
+        expect(User.find_by(device_id:)).to be_nil
+      end
+
+      it 'allows to create a new user with the same device id' do
+        expect(create(:user, device_id:, cities_ids: [city_bs.id, city_st.id])).to be_valid
       end
     end
 
     context 'when user does not exist' do
       let(:device_id) { 'k123v23hj213321jh12kj3123k' }
+
       before do
         delete '/api/v1/user',
                headers: { 'x-device-id' => device_id }

@@ -97,8 +97,7 @@ module Api
       end
 
       def delete
-        response = { message: nil,
-                     status_code: :ok }
+        response = { message: nil, status_code: :ok }
         begin
           @user.destroy!
         rescue StandardError => e
