@@ -482,7 +482,8 @@ RSpec.describe 'Users' do
     context 'when modified questions' do
       before do
         patch '/api/v1/user/questions/answer', headers: { 'x-device-id' => device_id },
-                                               params: { questions: { "#{question.label}": 1, "#{question2.label}": 1 } }
+                                               params: { questions: { "#{question.label}": 1,
+                                                                      "#{question2.label}": 1 } }
       end
 
       it 'returns ok request status' do
