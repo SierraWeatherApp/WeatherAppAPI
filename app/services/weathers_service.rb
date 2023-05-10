@@ -89,6 +89,7 @@ class WeathersService
   def city_response_message(id, temp_unit, user_answers)
     city = City.find(id)
     params = { longitude: city.longitude, latitude: city.latitude }
+    temp_unit = "fahrenheit"
     city_weather = retrieve_current_weather(params, temp_unit)
     temperature = city_weather[:temperature]
     apparent_temperature = city_weather[:apparent_temperature]
@@ -107,6 +108,10 @@ class WeathersService
   private
 
   def convert_to_celsius(temperature, apparent_temperature)
-    [temperature, apparent_temperature].map { |fahrenheit| (fahrenheit - 32) * (5 / 9) }
+    [temperature, apparent_temperature].map { |fahrenheit| celsius_to_fahrenheit(fahrenheit) }
+  end
+
+  def celsius_to_fahrenheit(fahrenheit)
+    (fahrenheit - 32) * 5 / 9
   end
 end
