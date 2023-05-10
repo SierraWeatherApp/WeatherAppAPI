@@ -64,12 +64,12 @@ class WeathersService
     Net::HTTP.get(uri)
   end
 
-  def retrieve_cloths_recommendation(weather_params, user_answers)
-    JSON.parse(cloths_communication(weather_params, user_answers))
+  def retrieve_cloths_recommendation(weather_params, temperature, apparent_temperature, user_answers)
+    JSON.parse(cloths_communication(weather_params, temperature, apparent_temperature, user_answers))
   end
 
-  def cloths_communication(weather_params, user_answers)
-    url = "http://130.229.151.193:4444/rec?inputs=#{weather_params[:apparent_temperature]}&inputs=#{weather_params[:temperature]}&inputs=#{weather_params[:relativehumidity_2m]}&inputs=#{weather_params[:windspeed]}&inputs=#{weather_params[:precipitation_probability]}&inputs=#{weather_params[:direct_radiation]}&inputs=#{user_answers['sandalUser']}&inputs=#{user_answers['shortUser']}&inputs=#{user_answers['capUser']}&inputs=#{user_answers['userPlace']}&inputs=#{user_answers['userTemp']}"
+  def cloths_communication(weather_params, temperature, apparent_temperature, user_answers)
+    url = "http://130.229.151.193:4444/rec?inputs=#{apparent_temperature}&inputs=#{temperature}&inputs=#{weather_params[:relativehumidity_2m]}&inputs=#{weather_params[:windspeed]}&inputs=#{weather_params[:precipitation_probability]}&inputs=#{weather_params[:direct_radiation]}&inputs=#{user_answers['sandalUser']}&inputs=#{user_answers['shortUser']}&inputs=#{user_answers['capUser']}&inputs=#{user_answers['userPlace']}&inputs=#{user_answers['userTemp']}"
     uri = URI(url)
     Net::HTTP.get(uri)
   end
@@ -90,10 +90,23 @@ class WeathersService
     city = City.find(id)
     params = { longitude: city.longitude, latitude: city.latitude }
     city_weather = retrieve_current_weather(params, temp_unit)
-    cloths_recommendation = retrieve_cloths_recommendation(city_weather, user_answers)
+    temperature = city_weather[:temperature]
+    apparent_temperature = city_weather[:apparent_temperature]
+    unless temp_unit == 'celsius'
+      temperature, apparent_temperature = convert_to_celsius(city_weather[:temperature],
+                                                             city_weather[:apparent_temperature])
+    end
+    cloths_recommendation = retrieve_cloths_recommendation(city_weather, temperature, apparent_temperature,
+                                                           user_answers)
     {
       id: city.id, weather_id: city.weather_id, weather: city_weather, city_name: city.name,
       longitude: city.longitude, latitude: city.latitude, recommendation: cloths_recommendation
     }
+  end
+
+  private
+
+  def convert_to_celsius(temperature, apparent_temperature)
+    [temperature, apparent_temperature].map { |c| (c * 1.8) + 32 }
   end
 end
