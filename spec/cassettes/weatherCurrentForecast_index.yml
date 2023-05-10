@@ -1,0 +1,36 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.open-meteo.com/v1/forecast?current_weather=true&forecast_days=1&hourly=apparent_temperature&latitude=52.52&longitude=13.41&temperature_unit=celsius&windspeed_unit=ms
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - api.open-meteo.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 10 May 2023 12:47:40 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJsYXRpdHVkZSI6NTIuNTIsImxvbmdpdHVkZSI6MTMuNDE5OTk4LCJnZW5lcmF0aW9udGltZV9tcyI6MC41MzIwMzEwNTkyNjUxMzY3LCJ1dGNfb2Zmc2V0X3NlY29uZHMiOjAsInRpbWV6b25lIjoiR01UIiwidGltZXpvbmVfYWJicmV2aWF0aW9uIjoiR01UIiwiZWxldmF0aW9uIjozOC4wLCJjdXJyZW50X3dlYXRoZXIiOnsidGVtcGVyYXR1cmUiOjIxLjUsIndpbmRzcGVlZCI6NC4yOSwid2luZGRpcmVjdGlvbiI6MTUyLjAsIndlYXRoZXJjb2RlIjoxLCJpc19kYXkiOjEsInRpbWUiOiIyMDIzLTA1LTEwVDEyOjAwIn0sImhvdXJseV91bml0cyI6eyJ0aW1lIjoiaXNvODYwMSIsInJlbGF0aXZlaHVtaWRpdHlfMm0iOiIlIiwidGVtcGVyYXR1cmVfMm0iOiLCsEMiLCJwcmVjaXBpdGF0aW9uX3Byb2JhYmlsaXR5IjoiJSIsImRpcmVjdF9yYWRpYXRpb24iOiJXL23CsiIsImFwcGFyZW50X3RlbXBlcmF0dXJlIjoiwrBDIn0sImhvdXJseSI6eyJ0aW1lIjpbIjIwMjMtMDUtMTBUMDA6MDAiLCIyMDIzLTA1LTEwVDAxOjAwIiwiMjAyMy0wNS0xMFQwMjowMCIsIjIwMjMtMDUtMTBUMDM6MDAiLCIyMDIzLTA1LTEwVDA0OjAwIiwiMjAyMy0wNS0xMFQwNTowMCIsIjIwMjMtMDUtMTBUMDY6MDAiLCIyMDIzLTA1LTEwVDA3OjAwIiwiMjAyMy0wNS0xMFQwODowMCIsIjIwMjMtMDUtMTBUMDk6MDAiLCIyMDIzLTA1LTEwVDEwOjAwIiwiMjAyMy0wNS0xMFQxMTowMCIsIjIwMjMtMDUtMTBUMTI6MDAiLCIyMDIzLTA1LTEwVDEzOjAwIiwiMjAyMy0wNS0xMFQxNDowMCIsIjIwMjMtMDUtMTBUMTU6MDAiLCIyMDIzLTA1LTEwVDE2OjAwIiwiMjAyMy0wNS0xMFQxNzowMCIsIjIwMjMtMDUtMTBUMTg6MDAiLCIyMDIzLTA1LTEwVDE5OjAwIiwiMjAyMy0wNS0xMFQyMDowMCIsIjIwMjMtMDUtMTBUMjE6MDAiLCIyMDIzLTA1LTEwVDIyOjAwIiwiMjAyMy0wNS0xMFQyMzowMCJdLCJyZWxhdGl2ZWh1bWlkaXR5XzJtIjpbNjAsNjQsNjQsNjYsNjcsNjQsNTgsNTEsNDgsNDQsNDIsNDAsMzksMzYsMzQsMzIsNDAsNjAsNjUsNzAsNzQsNzgsODAsODRdLCJ0ZW1wZXJhdHVyZV8ybSI6WzExLjQsMTAuOCwxMC4zLDEwLjAsOS42LDEwLjEsMTEuOSwxNC4xLDE1LjksMTcuOCwxOS4yLDIwLjUsMjEuNSwyMi4zLDIyLjcsMjIuNSwyMS42LDE4LjksMTcuOSwxNy4xLDE2LjMsMTUuNiwxNS4yLDE0LjRdLCJwcmVjaXBpdGF0aW9uX3Byb2JhYmlsaXR5IjpbMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCw1LDExLDE2LDI0LDMxLDM5LDMxLDI0LDE2LDE2LDE2XSwiZGlyZWN0X3JhZGlhdGlvbiI6WzAuMCwwLjAsMC4wLDAuMCwyLjAsNDkuMCwxNjMuMCwzMDUuMCw0NDcuMCw1NjguMCw2NTguMCw3MDYuMCw2ODguMCw1NjcuMCw0ODEuMCwzNzMuMCw0OC4wLDYuMCw4LjAsMC4wLDAuMCwwLjAsMC4wLDAuMF0sImFwcGFyZW50X3RlbXBlcmF0dXJlIjpbOC4wLDcuMyw2LjcsNi41LDYuMiw2LjcsOC4zLDEwLjEsMTIuMiwxNC45LDE2LjksMTguNywyMC4wLDIwLjMsMjAuMywxOS4yLDE5LjAsMTcuNiwxNy4yLDE2LjgsMTYuMywxNS45LDE1LjEsMTQuNV19fQ==
+  recorded_at: Wed, 10 May 2023 12:47:40 GMT
+recorded_with: VCR 6.1.0

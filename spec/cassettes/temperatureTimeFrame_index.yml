@@ -1,0 +1,36 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.open-meteo.com/v1/forecast?daily=weathercode&forecast_days=7&latitude=52.52&longitude=13.41&time&timezone=GMT
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - api.open-meteo.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 10 May 2023 12:47:41 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJsYXRpdHVkZSI6NTIuNTIsImxvbmdpdHVkZSI6MTMuNDE5OTk4LCJnZW5lcmF0aW9udGltZV9tcyI6MC40MjI5NTQ1NTkzMjYxNzE5LCJ1dGNfb2Zmc2V0X3NlY29uZHMiOjAsInRpbWV6b25lIjoiR01UIiwidGltZXpvbmVfYWJicmV2aWF0aW9uIjoiR01UIiwiZWxldmF0aW9uIjozOC4wLCJkYWlseV91bml0cyI6eyJ0aW1lIjoiaXNvODYwMSIsInRlbXBlcmF0dXJlXzJtX21heCI6IsKwQyIsInRlbXBlcmF0dXJlXzJtX21pbiI6IsKwQyIsIndlYXRoZXJjb2RlIjoid21vIGNvZGUifSwiZGFpbHkiOnsidGltZSI6WyIyMDIzLTA1LTEwIiwiMjAyMy0wNS0xMSIsIjIwMjMtMDUtMTIiLCIyMDIzLTA1LTEzIiwiMjAyMy0wNS0xNCIsIjIwMjMtMDUtMTUiLCIyMDIzLTA1LTE2Il0sInRlbXBlcmF0dXJlXzJtX21heCI6WzIyLjcsMjEuOSwyMS4zLDIxLjQsMjAuOSwxNS4wLDE1LjldLCJ0ZW1wZXJhdHVyZV8ybV9taW4iOls5LjYsMTEuNywxMC42LDExLjAsMTEuMSwxMi4xLDExLjddLCJ3ZWF0aGVyY29kZSI6WzMsMywzLDIsMyw2Myw2MV19fQ==
+  recorded_at: Wed, 10 May 2023 12:47:41 GMT
+recorded_with: VCR 6.1.0

@@ -89,7 +89,6 @@ class WeathersService
   def city_response_message(id, temp_unit, user_answers)
     city = City.find(id)
     params = { longitude: city.longitude, latitude: city.latitude }
-    temp_unit = "fahrenheit"
     city_weather = retrieve_current_weather(params, temp_unit)
     temperature = city_weather[:temperature]
     apparent_temperature = city_weather[:apparent_temperature]

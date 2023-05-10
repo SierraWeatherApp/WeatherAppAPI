@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.open-meteo.com/v1/forecast?current_weather=true&forecast_days=1&hourly=apparent_temperature&latitude=-34.61315&longitude=-58.37723&temperature_unit=fahrenheit&windspeed_unit=ms
+    uri: https://api.open-meteo.com/v1/forecast?current_weather=true&forecast_days=1&hourly=apparent_temperature&latitude=-34.61315&longitude=-58.37723&temperature_unit=celsius&windspeed_unit=ms
     body:
       encoding: US-ASCII
       string: ''
@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 10 May 2023 12:32:32 GMT
+      - Wed, 10 May 2023 12:46:52 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -31,6 +31,111 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJsYXRpdHVkZSI6LTM0Ljc1LCJsb25naXR1ZGUiOi01OC4zNzUsImdlbmVyYXRpb250aW1lX21zIjoxLjQ5MjAyMzQ2ODAxNzU3ODEsInV0Y19vZmZzZXRfc2Vjb25kcyI6MCwidGltZXpvbmUiOiJHTVQiLCJ0aW1lem9uZV9hYmJyZXZpYXRpb24iOiJHTVQiLCJlbGV2YXRpb24iOjE5LjAsImN1cnJlbnRfd2VhdGhlciI6eyJ0ZW1wZXJhdHVyZSI6NDkuOSwid2luZHNwZWVkIjoyLjI3LCJ3aW5kZGlyZWN0aW9uIjoyMjEuMCwid2VhdGhlcmNvZGUiOjAsImlzX2RheSI6MSwidGltZSI6IjIwMjMtMDUtMTBUMTI6MDAifSwiaG91cmx5X3VuaXRzIjp7InRpbWUiOiJpc284NjAxIiwicmVsYXRpdmVodW1pZGl0eV8ybSI6IiUiLCJ0ZW1wZXJhdHVyZV8ybSI6IsKwRiIsInByZWNpcGl0YXRpb25fcHJvYmFiaWxpdHkiOiIlIiwiZGlyZWN0X3JhZGlhdGlvbiI6IlcvbcKyIiwiYXBwYXJlbnRfdGVtcGVyYXR1cmUiOiLCsEYifSwiaG91cmx5Ijp7InRpbWUiOlsiMjAyMy0wNS0xMFQwMDowMCIsIjIwMjMtMDUtMTBUMDE6MDAiLCIyMDIzLTA1LTEwVDAyOjAwIiwiMjAyMy0wNS0xMFQwMzowMCIsIjIwMjMtMDUtMTBUMDQ6MDAiLCIyMDIzLTA1LTEwVDA1OjAwIiwiMjAyMy0wNS0xMFQwNjowMCIsIjIwMjMtMDUtMTBUMDc6MDAiLCIyMDIzLTA1LTEwVDA4OjAwIiwiMjAyMy0wNS0xMFQwOTowMCIsIjIwMjMtMDUtMTBUMTA6MDAiLCIyMDIzLTA1LTEwVDExOjAwIiwiMjAyMy0wNS0xMFQxMjowMCIsIjIwMjMtMDUtMTBUMTM6MDAiLCIyMDIzLTA1LTEwVDE0OjAwIiwiMjAyMy0wNS0xMFQxNTowMCIsIjIwMjMtMDUtMTBUMTY6MDAiLCIyMDIzLTA1LTEwVDE3OjAwIiwiMjAyMy0wNS0xMFQxODowMCIsIjIwMjMtMDUtMTBUMTk6MDAiLCIyMDIzLTA1LTEwVDIwOjAwIiwiMjAyMy0wNS0xMFQyMTowMCIsIjIwMjMtMDUtMTBUMjI6MDAiLCIyMDIzLTA1LTEwVDIzOjAwIl0sInJlbGF0aXZlaHVtaWRpdHlfMm0iOls3Nyw4MCw4Miw4Miw4Niw4Niw4OCw4Nyw4Niw4Nyw4OCw5MSw4Nyw3Nyw3MCw2NCw1OSw1OCw1NSw1NSw1Nyw2NCw3NCw3OV0sInRlbXBlcmF0dXJlXzJtIjpbNTYuNyw1NS40LDU0LjgsNTQuMyw1Mi41LDUxLjQsNTAuNyw1MC4zLDQ5LjgsNDkuMyw0OC43LDQ4LjAsNDkuOSw1NC4zLDU4LjMsNjEuMSw2Mi42LDYzLjMsNjMuNiw2My4yLDYxLjcsNTkuMyw1Ni4wLDUzLjZdLCJwcmVjaXBpdGF0aW9uX3Byb2JhYmlsaXR5IjpbMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDBdLCJkaXJlY3RfcmFkaWF0aW9uIjpbMC4wLDAuMCwwLjAsMC4wLDAuMCwwLjAsMC4wLDAuMCwwLjAsMC4wLDAuMCwzLjAsODguMCwyNDcuMCwzOTEuMCw0NzYuMCw0NjQuMCw0MDUuMCwzMzQuMCwyMzYuMCwxMjAuMCwyNS4wLDAuMCwwLjBdLCJhcHBhcmVudF90ZW1wZXJhdHVyZSI6WzU2LjUsNTQuMyw1NC4wLDUzLjIsNTAuOSw0OS42LDQ4LjcsNDguMCw0Ny4zLDQ2LjYsNDUuOCw0NS4wLDQ2LjgsNTEuMSw1NC43LDU3LjIsNTguNyw1OS4zLDU5LjMsNTguOCw1Ny42LDU2LjYsNTQuMSw1MS43XX19
-  recorded_at: Wed, 10 May 2023 12:32:33 GMT
+        eyJsYXRpdHVkZSI6LTM0Ljc1LCJsb25naXR1ZGUiOi01OC4zNzUsImdlbmVyYXRpb250aW1lX21zIjowLjQ3MzAyMjQ2MDkzNzUsInV0Y19vZmZzZXRfc2Vjb25kcyI6MCwidGltZXpvbmUiOiJHTVQiLCJ0aW1lem9uZV9hYmJyZXZpYXRpb24iOiJHTVQiLCJlbGV2YXRpb24iOjE5LjAsImN1cnJlbnRfd2VhdGhlciI6eyJ0ZW1wZXJhdHVyZSI6MTAuMCwid2luZHNwZWVkIjoyLjI3LCJ3aW5kZGlyZWN0aW9uIjoyMjEuMCwid2VhdGhlcmNvZGUiOjAsImlzX2RheSI6MSwidGltZSI6IjIwMjMtMDUtMTBUMTI6MDAifSwiaG91cmx5X3VuaXRzIjp7InRpbWUiOiJpc284NjAxIiwicmVsYXRpdmVodW1pZGl0eV8ybSI6IiUiLCJ0ZW1wZXJhdHVyZV8ybSI6IsKwQyIsInByZWNpcGl0YXRpb25fcHJvYmFiaWxpdHkiOiIlIiwiZGlyZWN0X3JhZGlhdGlvbiI6IlcvbcKyIiwiYXBwYXJlbnRfdGVtcGVyYXR1cmUiOiLCsEMifSwiaG91cmx5Ijp7InRpbWUiOlsiMjAyMy0wNS0xMFQwMDowMCIsIjIwMjMtMDUtMTBUMDE6MDAiLCIyMDIzLTA1LTEwVDAyOjAwIiwiMjAyMy0wNS0xMFQwMzowMCIsIjIwMjMtMDUtMTBUMDQ6MDAiLCIyMDIzLTA1LTEwVDA1OjAwIiwiMjAyMy0wNS0xMFQwNjowMCIsIjIwMjMtMDUtMTBUMDc6MDAiLCIyMDIzLTA1LTEwVDA4OjAwIiwiMjAyMy0wNS0xMFQwOTowMCIsIjIwMjMtMDUtMTBUMTA6MDAiLCIyMDIzLTA1LTEwVDExOjAwIiwiMjAyMy0wNS0xMFQxMjowMCIsIjIwMjMtMDUtMTBUMTM6MDAiLCIyMDIzLTA1LTEwVDE0OjAwIiwiMjAyMy0wNS0xMFQxNTowMCIsIjIwMjMtMDUtMTBUMTY6MDAiLCIyMDIzLTA1LTEwVDE3OjAwIiwiMjAyMy0wNS0xMFQxODowMCIsIjIwMjMtMDUtMTBUMTk6MDAiLCIyMDIzLTA1LTEwVDIwOjAwIiwiMjAyMy0wNS0xMFQyMTowMCIsIjIwMjMtMDUtMTBUMjI6MDAiLCIyMDIzLTA1LTEwVDIzOjAwIl0sInJlbGF0aXZlaHVtaWRpdHlfMm0iOls3Nyw4MCw4Miw4Miw4Niw4Niw4OCw4Nyw4Niw4Nyw4OCw5MSw4Nyw3Nyw3MCw2NCw1OSw1OCw1NSw1NSw1Nyw2NCw3NCw3OV0sInRlbXBlcmF0dXJlXzJtIjpbMTMuNywxMy4wLDEyLjcsMTIuNCwxMS40LDEwLjgsMTAuNCwxMC4yLDkuOSw5LjYsOS4zLDguOSwxMC4wLDEyLjQsMTQuNiwxNi4yLDE3LjAsMTcuNCwxNy42LDE3LjMsMTYuNSwxNS4yLDEzLjMsMTIuMF0sInByZWNpcGl0YXRpb25fcHJvYmFiaWxpdHkiOlswLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMF0sImRpcmVjdF9yYWRpYXRpb24iOlswLjAsMC4wLDAuMCwwLjAsMC4wLDAuMCwwLjAsMC4wLDAuMCwwLjAsMC4wLDMuMCw4OC4wLDI0Ny4wLDM5MS4wLDQ3Ni4wLDQ2NC4wLDQwNS4wLDMzNC4wLDIzNi4wLDEyMC4wLDI1LjAsMC4wLDAuMF0sImFwcGFyZW50X3RlbXBlcmF0dXJlIjpbMTMuNiwxMi40LDEyLjIsMTEuOCwxMC41LDkuOCw5LjMsOC45LDguNSw4LjEsNy42LDcuMiw4LjIsMTAuNiwxMi42LDE0LjAsMTQuOCwxNS4yLDE1LjIsMTQuOSwxNC4yLDEzLjcsMTIuMywxMC45XX19
+  recorded_at: Wed, 10 May 2023 12:46:52 GMT
+- request:
+    method: get
+    uri: http://130.229.151.193:4444/rec?inputs=0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - 130.229.151.193:4444
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - Werkzeug/2.3.3 Python/3.9.13
+      Date:
+      - Wed, 10 May 2023 12:46:53 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '98'
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '["head_empty","shirt_long-sleeve","jacket_empty","pants_pants","shoes_sneakers","umbrella_False"]
+
+        '
+  recorded_at: Wed, 10 May 2023 12:46:53 GMT
+- request:
+    method: get
+    uri: https://api.open-meteo.com/v1/forecast?current_weather=true&forecast_days=1&hourly=apparent_temperature&latitude=59.33459&longitude=18.06324&temperature_unit=celsius&windspeed_unit=ms
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - api.open-meteo.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 10 May 2023 12:46:53 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJsYXRpdHVkZSI6NTkuMzM4Mjk1LCJsb25naXR1ZGUiOjE4LjA1NTYwMywiZ2VuZXJhdGlvbnRpbWVfbXMiOjIuMjIwMDM0NTk5MzA0MTk5LCJ1dGNfb2Zmc2V0X3NlY29uZHMiOjAsInRpbWV6b25lIjoiR01UIiwidGltZXpvbmVfYWJicmV2aWF0aW9uIjoiR01UIiwiZWxldmF0aW9uIjoxMy4wLCJjdXJyZW50X3dlYXRoZXIiOnsidGVtcGVyYXR1cmUiOjE5LjUsIndpbmRzcGVlZCI6NS44LCJ3aW5kZGlyZWN0aW9uIjoxNzQuMCwid2VhdGhlcmNvZGUiOjEsImlzX2RheSI6MSwidGltZSI6IjIwMjMtMDUtMTBUMTI6MDAifSwiaG91cmx5X3VuaXRzIjp7InRpbWUiOiJpc284NjAxIiwicmVsYXRpdmVodW1pZGl0eV8ybSI6IiUiLCJ0ZW1wZXJhdHVyZV8ybSI6IsKwQyIsInByZWNpcGl0YXRpb25fcHJvYmFiaWxpdHkiOiIlIiwiZGlyZWN0X3JhZGlhdGlvbiI6IlcvbcKyIiwiYXBwYXJlbnRfdGVtcGVyYXR1cmUiOiLCsEMifSwiaG91cmx5Ijp7InRpbWUiOlsiMjAyMy0wNS0xMFQwMDowMCIsIjIwMjMtMDUtMTBUMDE6MDAiLCIyMDIzLTA1LTEwVDAyOjAwIiwiMjAyMy0wNS0xMFQwMzowMCIsIjIwMjMtMDUtMTBUMDQ6MDAiLCIyMDIzLTA1LTEwVDA1OjAwIiwiMjAyMy0wNS0xMFQwNjowMCIsIjIwMjMtMDUtMTBUMDc6MDAiLCIyMDIzLTA1LTEwVDA4OjAwIiwiMjAyMy0wNS0xMFQwOTowMCIsIjIwMjMtMDUtMTBUMTA6MDAiLCIyMDIzLTA1LTEwVDExOjAwIiwiMjAyMy0wNS0xMFQxMjowMCIsIjIwMjMtMDUtMTBUMTM6MDAiLCIyMDIzLTA1LTEwVDE0OjAwIiwiMjAyMy0wNS0xMFQxNTowMCIsIjIwMjMtMDUtMTBUMTY6MDAiLCIyMDIzLTA1LTEwVDE3OjAwIiwiMjAyMy0wNS0xMFQxODowMCIsIjIwMjMtMDUtMTBUMTk6MDAiLCIyMDIzLTA1LTEwVDIwOjAwIiwiMjAyMy0wNS0xMFQyMTowMCIsIjIwMjMtMDUtMTBUMjI6MDAiLCIyMDIzLTA1LTEwVDIzOjAwIl0sInJlbGF0aXZlaHVtaWRpdHlfMm0iOls2MSw2Myw2NSw2Nyw2NSw1OCw1Myw0OCw0MiwzNywzMywzMCwyOSwzMSwyOSwzMywzNCwzNywzOSw0NSw1MSw1NSw1Niw1NV0sInRlbXBlcmF0dXJlXzJtIjpbOS45LDkuMyw4LjgsOC41LDkuMiwxMC4wLDExLjUsMTMuNSwxNS43LDE3LjMsMTkuMCwxOS42LDE5LjUsMTkuNCwxOS40LDE4LjgsMTguMCwxNi42LDE1LjQsMTQuMiwxMi44LDExLjYsMTEuMSwxMC45XSwicHJlY2lwaXRhdGlvbl9wcm9iYWJpbGl0eSI6WzAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwXSwiZGlyZWN0X3JhZGlhdGlvbiI6WzAuMCwwLjAsMC4wLDAuMywyMy42LDkxLjEsMTkyLjYsMzA4LjAsNDE1LjEsNTAzLjEsNTY0LjQsNTkwLjEsNTgzLjMsNTQ3LjksNDcyLjksMzcwLjUsMjU0LjUsMTQyLjIsNTIuNyw3LjIsMC4wLDAuMCwwLjAsMC4wXSwiYXBwYXJlbnRfdGVtcGVyYXR1cmUiOls1LjgsNS41LDUuMyw1LjEsNS43LDYuMSw3LjgsMTAuMSwxMi41LDE0LjEsMTUuNSwxNS43LDE1LjQsMTUuMSwxNC43LDE0LjQsMTMuOCwxMi42LDExLjYsMTEuMCw5LjQsOC4wLDcuMSw3LjFdfX0=
+  recorded_at: Wed, 10 May 2023 12:46:53 GMT
+- request:
+    method: get
+    uri: http://130.229.151.193:4444/rec?inputs=0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - 130.229.151.193:4444
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - Werkzeug/2.3.3 Python/3.9.13
+      Date:
+      - Wed, 10 May 2023 12:46:55 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '98'
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '["head_empty","shirt_long-sleeve","jacket_empty","pants_pants","shoes_sneakers","umbrella_False"]
+
+        '
+  recorded_at: Wed, 10 May 2023 12:46:55 GMT
 recorded_with: VCR 6.1.0
