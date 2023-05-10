@@ -107,6 +107,10 @@ class WeathersService
   private
 
   def convert_to_celsius(temperature, apparent_temperature)
-    [temperature, apparent_temperature].map { |fahrenheit| (fahrenheit - 32) * (5 / 9) }
+    [temperature, apparent_temperature].map { |fahrenheit| celsius_to_fahrenheit(fahrenheit) }
+  end
+
+  def celsius_to_fahrenheit(fahrenheit)
+    (fahrenheit - 32) * 5 / 9
   end
 end
