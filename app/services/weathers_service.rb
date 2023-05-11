@@ -69,7 +69,7 @@ class WeathersService
   end
 
   def cloths_communication(weather_params, temperature, apparent_temperature, user_answers)
-    url = "http://130.229.151.193:4444/rec?inputs=#{apparent_temperature}&inputs=#{temperature}&inputs=#{weather_params[:relativehumidity_2m]}&inputs=#{weather_params[:windspeed]}&inputs=#{weather_params[:precipitation_probability]}&inputs=#{weather_params[:direct_radiation]}&inputs=#{user_answers['sandalUser']}&inputs=#{user_answers['shortUser']}&inputs=#{user_answers['capUser']}&inputs=#{user_answers['userPlace']}&inputs=#{user_answers['userTemp']}"
+    url = "https://recommender-docker.onrender.com/rec?inputs=#{apparent_temperature}&inputs=#{temperature}&inputs=#{weather_params[:relativehumidity_2m]}&inputs=#{weather_params[:windspeed]}&inputs=#{weather_params[:precipitation_probability]}&inputs=#{weather_params[:direct_radiation]}&inputs=#{user_answers['sandalUser']}&inputs=#{user_answers['shortUser']}&inputs=#{user_answers['capUser']}&inputs=#{user_answers['userPlace']}&inputs=#{user_answers['userTemp']}"
     uri = URI(url)
     Net::HTTP.get(uri)
   end

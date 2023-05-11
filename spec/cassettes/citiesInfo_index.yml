@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 10 May 2023 12:59:10 GMT
+      - Thu, 11 May 2023 12:17:42 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -31,11 +31,11 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJsYXRpdHVkZSI6NTkuMzM4Mjk1LCJsb25naXR1ZGUiOjE4LjA1NTYwMywiZ2VuZXJhdGlvbnRpbWVfbXMiOjAuNDQyMDI4MDQ1NjU0Mjk2OSwidXRjX29mZnNldF9zZWNvbmRzIjowLCJ0aW1lem9uZSI6IkdNVCIsInRpbWV6b25lX2FiYnJldmlhdGlvbiI6IkdNVCIsImVsZXZhdGlvbiI6MTMuMCwiY3VycmVudF93ZWF0aGVyIjp7InRlbXBlcmF0dXJlIjoxOS41LCJ3aW5kc3BlZWQiOjUuOCwid2luZGRpcmVjdGlvbiI6MTc0LjAsIndlYXRoZXJjb2RlIjoxLCJpc19kYXkiOjEsInRpbWUiOiIyMDIzLTA1LTEwVDEyOjAwIn0sImhvdXJseV91bml0cyI6eyJ0aW1lIjoiaXNvODYwMSIsInJlbGF0aXZlaHVtaWRpdHlfMm0iOiIlIiwidGVtcGVyYXR1cmVfMm0iOiLCsEMiLCJwcmVjaXBpdGF0aW9uX3Byb2JhYmlsaXR5IjoiJSIsImRpcmVjdF9yYWRpYXRpb24iOiJXL23CsiIsImFwcGFyZW50X3RlbXBlcmF0dXJlIjoiwrBDIn0sImhvdXJseSI6eyJ0aW1lIjpbIjIwMjMtMDUtMTBUMDA6MDAiLCIyMDIzLTA1LTEwVDAxOjAwIiwiMjAyMy0wNS0xMFQwMjowMCIsIjIwMjMtMDUtMTBUMDM6MDAiLCIyMDIzLTA1LTEwVDA0OjAwIiwiMjAyMy0wNS0xMFQwNTowMCIsIjIwMjMtMDUtMTBUMDY6MDAiLCIyMDIzLTA1LTEwVDA3OjAwIiwiMjAyMy0wNS0xMFQwODowMCIsIjIwMjMtMDUtMTBUMDk6MDAiLCIyMDIzLTA1LTEwVDEwOjAwIiwiMjAyMy0wNS0xMFQxMTowMCIsIjIwMjMtMDUtMTBUMTI6MDAiLCIyMDIzLTA1LTEwVDEzOjAwIiwiMjAyMy0wNS0xMFQxNDowMCIsIjIwMjMtMDUtMTBUMTU6MDAiLCIyMDIzLTA1LTEwVDE2OjAwIiwiMjAyMy0wNS0xMFQxNzowMCIsIjIwMjMtMDUtMTBUMTg6MDAiLCIyMDIzLTA1LTEwVDE5OjAwIiwiMjAyMy0wNS0xMFQyMDowMCIsIjIwMjMtMDUtMTBUMjE6MDAiLCIyMDIzLTA1LTEwVDIyOjAwIiwiMjAyMy0wNS0xMFQyMzowMCJdLCJyZWxhdGl2ZWh1bWlkaXR5XzJtIjpbNjEsNjMsNjUsNjcsNjUsNTgsNTMsNDgsNDIsMzcsMzMsMzAsMjksMzEsMjksMzMsMzQsMzcsMzksNDUsNTEsNTUsNTYsNTVdLCJ0ZW1wZXJhdHVyZV8ybSI6WzkuOSw5LjMsOC44LDguNSw5LjIsMTAuMCwxMS41LDEzLjUsMTUuNywxNy4zLDE5LjAsMTkuNiwxOS41LDE5LjQsMTkuNCwxOC44LDE4LjAsMTYuNiwxNS40LDE0LjIsMTIuOCwxMS42LDExLjEsMTAuOV0sInByZWNpcGl0YXRpb25fcHJvYmFiaWxpdHkiOlswLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMF0sImRpcmVjdF9yYWRpYXRpb24iOlswLjAsMC4wLDAuMCwwLjMsMjMuNiw5MS4xLDE5Mi42LDMwOC4wLDQxNS4xLDUwMy4xLDU2NC40LDU5MC4xLDU4My4zLDU0Ny45LDQ3Mi45LDM3MC41LDI1NC41LDE0Mi4yLDUyLjcsNy4yLDAuMCwwLjAsMC4wLDAuMF0sImFwcGFyZW50X3RlbXBlcmF0dXJlIjpbNS44LDUuNSw1LjMsNS4xLDUuNyw2LjEsNy44LDEwLjEsMTIuNSwxNC4xLDE1LjUsMTUuNywxNS40LDE1LjEsMTQuNywxNC40LDEzLjgsMTIuNiwxMS42LDExLjAsOS40LDguMCw3LjEsNy4xXX19
-  recorded_at: Wed, 10 May 2023 12:59:10 GMT
+        eyJsYXRpdHVkZSI6NTkuMzM4Mjk1LCJsb25naXR1ZGUiOjE4LjA1NTYwMywiZ2VuZXJhdGlvbnRpbWVfbXMiOjAuNzU4MDUxODcyMjUzNDE4LCJ1dGNfb2Zmc2V0X3NlY29uZHMiOjAsInRpbWV6b25lIjoiR01UIiwidGltZXpvbmVfYWJicmV2aWF0aW9uIjoiR01UIiwiZWxldmF0aW9uIjoxMy4wLCJjdXJyZW50X3dlYXRoZXIiOnsidGVtcGVyYXR1cmUiOjIxLjAsIndpbmRzcGVlZCI6NC44LCJ3aW5kZGlyZWN0aW9uIjoxOTQuMCwid2VhdGhlcmNvZGUiOjIsImlzX2RheSI6MSwidGltZSI6IjIwMjMtMDUtMTFUMTI6MDAifSwiaG91cmx5X3VuaXRzIjp7InRpbWUiOiJpc284NjAxIiwicmVsYXRpdmVodW1pZGl0eV8ybSI6IiUiLCJ0ZW1wZXJhdHVyZV8ybSI6IsKwQyIsInByZWNpcGl0YXRpb25fcHJvYmFiaWxpdHkiOiIlIiwiZGlyZWN0X3JhZGlhdGlvbiI6IlcvbcKyIiwiYXBwYXJlbnRfdGVtcGVyYXR1cmUiOiLCsEMifSwiaG91cmx5Ijp7InRpbWUiOlsiMjAyMy0wNS0xMVQwMDowMCIsIjIwMjMtMDUtMTFUMDE6MDAiLCIyMDIzLTA1LTExVDAyOjAwIiwiMjAyMy0wNS0xMVQwMzowMCIsIjIwMjMtMDUtMTFUMDQ6MDAiLCIyMDIzLTA1LTExVDA1OjAwIiwiMjAyMy0wNS0xMVQwNjowMCIsIjIwMjMtMDUtMTFUMDc6MDAiLCIyMDIzLTA1LTExVDA4OjAwIiwiMjAyMy0wNS0xMVQwOTowMCIsIjIwMjMtMDUtMTFUMTA6MDAiLCIyMDIzLTA1LTExVDExOjAwIiwiMjAyMy0wNS0xMVQxMjowMCIsIjIwMjMtMDUtMTFUMTM6MDAiLCIyMDIzLTA1LTExVDE0OjAwIiwiMjAyMy0wNS0xMVQxNTowMCIsIjIwMjMtMDUtMTFUMTY6MDAiLCIyMDIzLTA1LTExVDE3OjAwIiwiMjAyMy0wNS0xMVQxODowMCIsIjIwMjMtMDUtMTFUMTk6MDAiLCIyMDIzLTA1LTExVDIwOjAwIiwiMjAyMy0wNS0xMVQyMTowMCIsIjIwMjMtMDUtMTFUMjI6MDAiLCIyMDIzLTA1LTExVDIzOjAwIl0sInJlbGF0aXZlaHVtaWRpdHlfMm0iOls1Nyw1OSw2MCw2MCw1Niw1Miw0OCw0NCw0MCwzNiwzMSwyOSwyOSwyOSwyOSwyOCwzMCwzMiwzNCwzOSw0Nyw1Miw1Myw1Nl0sInRlbXBlcmF0dXJlXzJtIjpbOS41LDkuNyw5LjYsOS44LDEwLjMsMTEuMywxMi44LDE0LjcsMTYuOSwxOS4xLDIwLjQsMjEuMSwyMS4wLDIwLjgsMjAuNCwxOS45LDE5LjIsMTguMiwxNi45LDE1LjQsMTMuOSwxMi41LDExLjcsMTAuOV0sInByZWNpcGl0YXRpb25fcHJvYmFiaWxpdHkiOlswLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDAsMF0sImRpcmVjdF9yYWRpYXRpb24iOlswLjAsMC4wLDAuMCwwLjQsMjQuOSw5My45LDE5OC4wLDMxNi4zLDQyNi40LDUxMy40LDU2My45LDU4Ni44LDU2OC45LDUzOS41LDQ3MS41LDM2OS40LDI1My43LDE0My40LDU1LjMsNy42LDAuMCwwLjAsMC4wLDAuMF0sImFwcGFyZW50X3RlbXBlcmF0dXJlIjpbNS44LDYuMyw2LjEsNi4xLDYuNiw3LjMsOC44LDExLjMsMTMuOSwxNi41LDE3LjQsMTguMSwxNy43LDE3LjIsMTYuMywxNS4yLDE0LjksMTQuMCwxMi44LDExLjYsMTAuNiw5LjQsOC42LDcuN119fQ==
+  recorded_at: Thu, 11 May 2023 12:17:42 GMT
 - request:
     method: get
-    uri: http://130.229.151.193:4444/rec?inputs=0
+    uri: https://recommender-docker.onrender.com/rec?inputs=0
     body:
       encoding: US-ASCII
       string: ''
@@ -47,26 +47,42 @@ http_interactions:
       User-Agent:
       - Ruby
       Host:
-      - 130.229.151.193:4444
+      - recommender-docker.onrender.com
   response:
     status:
       code: 200
       message: OK
     headers:
-      Server:
-      - Werkzeug/2.3.3 Python/3.9.13
       Date:
-      - Wed, 10 May 2023 12:59:14 GMT
+      - Thu, 11 May 2023 12:18:01 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '98'
+      - '106'
       Connection:
-      - close
+      - keep-alive
+      Cf-Ray:
+      - 7c5a5c3ecd2298fa-ARN
+      Vary:
+      - Accept-Encoding
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Render-Origin-Server:
+      - gunicorn
+      Set-Cookie:
+      - __cf_bm=J.DnaejHhlr4yE3rgAwPqwa6aK6_W02VjqjGQDWvnMQ-1683807481-0-AX9d/AkDQpC+m3tlhQpKOzYsb3xN8wDL2ehv6PuNdSkr8TH2+P12+EKPcLvSFNUDqOZhKLDI7cx3tICmbXzKUOM=;
+        path=/; expires=Thu, 11-May-23 12:48:01 GMT; domain=.onrender.com; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=vjsOtq7mrHRLJ9PHR42MDYQwlxtEzQoBWLEBdhhYMZQ-1683807481103-0-604800000;
+        path=/; domain=.onrender.com; HttpOnly; Secure; SameSite=None
+      Server:
+      - cloudflare
+      Alt-Svc:
+      - h3=":443"; ma=86400, h3-29=":443"; ma=86400
     body:
-      encoding: UTF-8
+      encoding: ASCII-8BIT
       string: '["head_empty","shirt_long-sleeve","jacket_empty","pants_pants","shoes_sneakers","umbrella_False"]
 
         '
-  recorded_at: Wed, 10 May 2023 12:59:14 GMT
+  recorded_at: Thu, 11 May 2023 12:18:01 GMT
 recorded_with: VCR 6.1.0
